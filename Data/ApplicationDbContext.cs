@@ -24,6 +24,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
                 Encoding = Encoding.UTF8,
                 PrepareHeaderForMatch = args => args.Header.ToLower(),
+
         };
 
         var data = new List<Activity>().AsEnumerable();

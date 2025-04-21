@@ -435,7 +435,7 @@ Id,Title,Type,Participants,Price,ActivityDuration,kidFriendly
 434,Take a hot air balloon ride,Recreational,Solo,High,Short,true
 435,Create an art piece from recyclables,DIY,Solo,Low,Medium,true
 436,Take a cooking class for desserts,Cooking,Group,Low,Medium,false
-437,Host a "game night" with friends,Social,Group,Low,Medium,true
+437,Host a game night with friends,Social,Group,Low,Medium,true
 438,Attend a fashion show,Social,Group,Medium,Medium,false
 439,Go rock climbing at an indoor gym,Sports,Solo,Medium,Medium,true
 440,Volunteer at an animal shelter,Charity,Group,Free,Medium,true
@@ -459,7 +459,7 @@ Id,Title,Type,Participants,Price,ActivityDuration,kidFriendly
 458,Go on a food tasting tour,Travel,Group,Medium,Medium,true
 459,Go on a photography walk,Recreational,Solo,Free,Medium,true
 460,Attend a film festival,Social,Group,Medium,Long,false
-461,Write a short story,Writing,Solo,Free,Long,true
+461,Write a short story,Relaxation,Solo,Free,Long,true
 462,Take a dance class,Recreational,Group,Low,Medium,false
 463,Learn origami,DIY,Solo,Free,Short,true
 464,Attend a public speaking workshop,Education,Group,Medium,Short,false
@@ -485,7 +485,7 @@ Id,Title,Type,Participants,Price,ActivityDuration,kidFriendly
 484,Make homemade ice cream,DIY,Solo,Low,Medium,true
 485,Do a puzzle with family,Recreational,Group,Free,Medium,true
 486,Take a group fitness class,Sports,Group,Low,Medium,true
-487,Have a "do nothing" day,Recreational,Solo,Free,Long,true
+487,Have a do nothing day,Recreational,Solo,Free,Long,true
 488,Go for a bike ride in a new area,Recreational,Solo,Free,Medium,true
 489,Host a DIY workshop,Social,Group,Low,Medium,true
 490,Do a digital detox,Relaxation,Solo,Free,Long,true
@@ -619,7 +619,7 @@ Id,Title,Type,Participants,Price,ActivityDuration,kidFriendly
 618, Try a long-distance cycling event, Sports, Solo, Medium, Long, true
 619, Go to a trampoline park for fun and fitness, Sports, Group, Low, Medium, true
 620, Take a hiking challenge on a famous trail, Sports, Solo, Free, Long, true
-621, Take a long, relaxing bath with essential oils, Relaxation, Solo, Low, Short, true
+621, Take a relaxing bath with essential oils, Relaxation, Solo, Low, Short, true
 622, Try a guided sleep meditation, Relaxation, Solo, Free, Short, true
 623, Go for a walk in a quiet garden, Relaxation, Solo, Free, Medium, true
 624, Practice deep breathing exercises, Relaxation, Solo, Free, Short, true
