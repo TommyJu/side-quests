@@ -1,0 +1,55 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace im_bored.Models;
+
+public class Activity
+{
+    [Key]
+    [Required]
+    public required int Id { get; set; }
+    [Required]
+    public required string Title { get; set; }
+    [Required]
+    public required ActivityType Type { get; set; }
+    [Required]
+    public required ActivityParticipants Participants { get; set; }
+    public required ActivityPrice Price { get; set; }
+    [Required]
+    public required ActivityDuration ActivityDuration { get; set; }
+    public required bool kidFriendly { get; set; }
+}
+
+public enum ActivityType
+{ 
+    Recreational,
+    Social,
+    Education,
+    Charity,
+    Cooking,
+    Relaxation,
+    Music,
+    DIY,
+    Sports,
+    Travel
+}
+
+public enum ActivityDuration
+{
+    Short,
+    Medium,
+    Long
+}
+
+public enum ActivityPrice
+{
+    Free,
+    Low,
+    Medium,
+    High
+}
+public enum ActivityParticipants
+{
+    Solo,
+    Group,
+    Any
+}
