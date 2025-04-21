@@ -1,0 +1,651 @@
+Id,Title,Type,Participants,Price,ActivityDuration,kidFriendly
+1,Go for a walk,Recreational,Solo,Free,Short,true
+2,Volunteer at an animal shelter,Charity,Group,Free,Medium,true
+3,Bake cookies,Cooking,Group,Low,Medium,true
+4,Attend a yoga class,Recreational,Solo,Low,Medium,true
+5,Play board games,Social,Group,Low,Long,true
+6,Go hiking,Sports,Group,Free,Long,true
+7,Visit a museum,Education,Solo,Medium,Medium,true
+8,Learn to play an instrument,Music,Solo,Low,Long,false
+9,Watch a documentary,Education,Solo,Free,Medium,true
+10,Plant a small herb garden,DIY,Solo,Low,Long,true
+11,Build a birdhouse,DIY,Solo,Low,Medium,true
+12,Join a local sports team,Sports,Group,Medium,Long,false
+13,Take an online course,Education,Solo,Free,Long,true
+14,Go to a community concert,Music,Group,Free,Short,true
+15,Organize a picnic,Social,Group,Low,Medium,true
+16,Try a new recipe,Cooking,Solo,Low,Medium,true
+17,Go on a road trip,Travel,Group,High,Long,false
+18,Paint or draw,Recreational,Solo,Free,Medium,true
+19,Do a puzzle,Recreational,Solo,Free,Medium,true
+20,Host a movie night,Social,Group,Low,Long,true
+21,Practice meditation,Relaxation,Solo,Free,Short,true
+22,Help a neighbor with errands,Charity,Solo,Free,Short,true
+23,Make a scrapbook,DIY,Solo,Low,Long,true
+24,Attend a cooking class,Cooking,Group,Medium,Medium,false
+25,Write in a journal,Relaxation,Solo,Free,Short,true
+26,Go swimming,Sports,Solo,Medium,Medium,false
+27,Do a neighborhood cleanup,Charity,Group,Free,Medium,true
+28,Build a fort with blankets,Recreational,Group,Free,Short,true
+29,Explore a new town,Travel,Group,Medium,Long,false
+30,Perform music in public,Music,Solo,Free,Medium,false
+31,Create a family photo album,DIY,Group,Low,Long,true
+32,Make homemade pizza,Cooking,Group,Low,Medium,true
+33,Stargaze at night,Relaxation,Solo,Free,Long,true
+34,Try a fitness challenge,Sports,Solo,Free,Medium,true
+35,Visit a historical site,Education,Solo,Low,Medium,true
+36,Go for a jog,Recreational,Solo,Free,Short,true
+37,Organize a beach cleanup,Charity,Group,Free,Medium,true
+38,Make candles at home,DIY,Solo,Low,Medium,true
+39,Attend a pottery workshop,Recreational,Group,Medium,Medium,false
+40,Visit a science center,Education,Group,Low,Medium,true
+41,Write a short story,Relaxation,Solo,Free,Medium,true
+42,Learn basic coding,Education,Solo,Free,Long,true
+43,Do a parkour course,Sports,Solo,Free,Medium,false
+44,Go biking with friends,Sports,Group,Free,Medium,true
+45,Organize a food drive,Charity,Group,Low,Medium,true
+46,Create a music playlist,Music,Solo,Free,Short,true
+47,Try origami,DIY,Solo,Free,Short,true
+48,Make a YouTube vlog,Recreational,Solo,Free,Long,false
+49,Host a karaoke night,Music,Group,Low,Long,true
+50,Create an indoor obstacle course,Recreational,Group,Free,Short,true
+51,Join a book club,Education,Group,Free,Long,true
+52,Make slime,DIY,Solo,Low,Short,true
+53,Camp in your backyard,Travel,Group,Free,Long,true
+54,Learn sign language,Education,Solo,Free,Long,true
+55,Go geocaching,Travel,Solo,Free,Medium,true
+56,Do yoga with a friend,Relaxation,Group,Free,Medium,true
+57,Make your own board game,DIY,Group,Low,Long,true
+58,Watch a play,Social,Group,Medium,Medium,false
+59,Make jewelry at home,DIY,Solo,Low,Medium,true
+60,Try birdwatching,Recreational,Solo,Free,Medium,true
+61,Paint rocks and hide them,DIY,Group,Low,Medium,true
+62,Visit a botanical garden,Travel,Solo,Low,Short,true
+63,Learn a dance routine,Recreational,Group,Free,Medium,false
+64,Set up a lemonade stand,Charity,Group,Low,Short,true
+65,Build with LEGO,Recreational,Solo,Low,Medium,true
+66,Have a water balloon fight,Recreational,Group,Low,Short,true
+67,Make paper mâché art,DIY,Group,Low,Medium,true
+68,Try a no-spend day challenge,Recreational,Solo,Free,Long,true
+69,Build a computer game,DIY,Solo,Free,Long,false
+70,Attend a local fair,Social,Group,Medium,Long,true
+71,Start a daily gratitude journal,Relaxation,Solo,Free,Short,true
+72,Help cook a meal at a shelter,Charity,Group,Free,Medium,false
+73,Start a blog,Recreational,Solo,Free,Long,false
+74,Go fishing,Recreational,Solo,Low,Medium,true
+75,Take care of a plant,Relaxation,Solo,Low,Long,true
+76,Host a trivia night,Social,Group,Low,Medium,true
+77,Write letters to family,Social,Solo,Free,Short,true
+78,Practice photography,Recreational,Solo,Free,Medium,true
+79,Attend a local art walk,Travel,Group,Free,Short,true
+80,Make a collage from magazines,DIY,Solo,Free,Short,true
+81,Try henna art,DIY,Group,Low,Medium,false
+82,Take a scenic train ride,Travel,Group,Medium,Long,true
+83,Do indoor rock climbing,Sports,Solo,Medium,Medium,false
+84,Record a podcast,Recreational,Solo,Free,Long,false
+85,Write and mail thank-you cards,Social,Solo,Free,Short,true
+86,Decorate reusable bags,DIY,Solo,Low,Short,true
+87,Learn basic first aid,Education,Solo,Free,Short,true
+88,Create an escape room at home,Recreational,Group,Low,Medium,true
+89,Do a virtual museum tour,Education,Solo,Free,Medium,true
+90,Fly a kite,Recreational,Solo,Low,Medium,true
+91,Organize a talent show,Social,Group,Low,Medium,true
+92,Take a fitness class online,Sports,Solo,Free,Short,true
+93,Make your own comic book,DIY,Solo,Free,Long,true
+94,Join a virtual choir,Music,Group,Free,Medium,true
+95,Create digital art,DIY,Solo,Free,Long,false
+96,Do a family recipe night,Cooking,Group,Low,Medium,true
+97,Help tutor a student online,Charity,Solo,Free,Medium,true
+98,Watch an international film,Education,Solo,Free,Long,false
+99,Make a time capsule,DIY,Group,Free,Medium,true
+100,Go ice skating,Sports,Group,Medium,Medium,false
+101,Explore your city by foot,Travel,Solo,Free,Medium,true
+102,Start a scrapbook challenge,DIY,Solo,Low,Long,true
+103,Write a poem,Relaxation,Solo,Free,Short,true
+104,Host a themed dinner party,Social,Group,Medium,Medium,false
+105,Do a backyard photo shoot,Recreational,Solo,Free,Short,true
+106,Listen to a full album,Music,Solo,Free,Medium,true
+107,Draw a family tree,Education,Solo,Free,Medium,true
+108,Help organize a local event,Charity,Group,Free,Long,false
+109,Start a savings jar,Recreational,Solo,Free,Long,true
+110,Organize your closet,DIY,Solo,Free,Short,true
+111,Do a puzzle race,Recreational,Group,Free,Medium,true
+112,Try glass painting,DIY,Solo,Low,Medium,true
+113,Build a cardboard fort,DIY,Group,Free,Medium,true
+114,Participate in a walkathon,Charity,Group,Free,Medium,true
+115,Set up a mini-golf course,Recreational,Group,Low,Medium,true
+116,Make a family recipe book,DIY,Group,Low,Long,true
+117,Attend a local sports game,Social,Group,Medium,Long,false
+118,Try a new hairstyle,Recreational,Solo,Free,Short,true
+119,Make a vision board,DIY,Solo,Free,Medium,true
+120,Go to a flea market,Travel,Solo,Low,Medium,true
+121,Learn about a new culture,Education,Solo,Free,Long,true
+122,Do a random act of kindness,Charity,Solo,Free,Short,true
+123,Make a family tree,Education,Solo,Free,Medium,true
+124,Try a new workout routine,Sports,Solo,Free,Medium,true
+125,Create a family calendar,DIY,Group,Low,Medium,true
+126,Go to a local park,Recreational,Solo,Free,Short,true
+127,Make a scrapbook of memories,DIY,Solo,Low,Long,true
+128,Attend a local workshop,Education,Group,Medium,Medium,false
+129,Try a new type of tea,Relaxation,Solo,Free,Short,true
+130,Go to a farmer's market,Travel,Solo,Low,Short,true
+131,Make a family video,DIY,Group,Low,Long,true
+132,Write a letter to your future self,Relaxation,Solo,Free,Medium,true
+133,Create a family recipe night,DIY,Group,Low,Medium,true
+134,Try a new sport,Recreational,Solo,Free,Medium,true
+135,Make a family photo wall,DIY,Group,Low,Medium,true
+136,Attend a local festival,Social,Group,Medium,Long,true
+137,Try a new type of cuisine,Recreational,Solo,Low,Medium,true
+138,Go to a planetarium,Education,Solo,Low,Short,true
+139,Volunteer at a food bank,Charity,Group,Free,Short,true
+140,Take a pottery class,DIY,Solo,Medium,Medium,true
+141,Go for a nature walk,Recreational,Solo,Free,Medium,true
+142,Attend a comedy show,Social,Group,Medium,Short,false
+143,Make your own perfume,DIY,Solo,Low,Medium,true
+144,Go to a dance class,Recreational,Group,Low,Medium,true
+145,Start a workout routine,Sports,Solo,Low,Long,true
+146,Have a picnic in the park,Social,Group,Low,Medium,true
+147,Go to a zoo,Education,Solo,Low,Short,true
+148,Join a gym,Recreational,Solo,Low,Long,false
+149,Do a fitness challenge with friends,Sports,Group,Free,Short,true
+150,Take a photography class,Education,Solo,Low,Medium,true
+151,Do a self-care day,Relaxation,Solo,Free,Long,true
+152,Write a song,Music,Solo,Low,Medium,false
+153,Go stargazing with friends,Relaxation,Group,Low,Long,true
+154,Go to a spa,Relaxation,Solo,Medium,Short,false
+155,Make a homemade gift,DIY,Solo,Low,Short,true
+156,Have a DIY home spa day,Relaxation,Solo,Low,Short,true
+157,Go ice fishing,Sports,Solo,High,Long,false
+158,Go horseback riding,Sports,Group,Medium,Medium,false
+159,Build a treehouse,DIY,Solo,Medium,Long,true
+160,Go to an amusement park,Recreational,Group,High,Long,false
+161,Host a barbecue,Social,Group,Low,Medium,true
+162,Try an escape room,Recreational,Group,Medium,Short,true
+163,Take a scenic hike,Travel,Solo,Free,Medium,true
+164,Make a vision board,DIY,Solo,Free,Medium,true
+165,Go to a live sports event,Social,Group,High,Long,false
+166,Join a hiking group,Recreational,Group,Free,Medium,true
+167,Visit an aquarium,Education,Solo,Low,Short,true
+168,Do a 30-day fitness challenge,Sports,Solo,Free,Long,true
+169,Take a road trip with friends,Travel,Group,High,Long,true
+170,Build a sandcastle,Recreational,Group,Low,Short,true
+171,Host a themed party,Social,Group,Low,Medium,false
+172,Start a herb garden,DIY,Solo,Low,Medium,true
+173,Try ice climbing,Sports,Solo,High,Long,false
+174,Go paddleboarding,Sports,Solo,Medium,Medium,false
+175,Make a terrarium,DIY,Solo,Low,Medium,true
+176,Do a home workout,Sports,Solo,Low,Short,true
+177,Take a painting class,Recreational,Solo,Low,Medium,true
+178,Try sewing,DIY,Solo,Low,Medium,true
+179,Have a photo scavenger hunt,Recreational,Group,Low,Short,true
+180,Take a dance class with a friend,Recreational,Group,Low,Medium,true
+181,Host a virtual trivia night,Social,Group,Low,Medium,true
+182,Make a homemade candle,DIY,Solo,Low,Short,true
+183,Try a new board game,Social,Group,Low,Short,true
+184,Do a random act of kindness for a stranger,Charity,Solo,Free,Short,true
+185,Have a picnic on the beach,Social,Group,Low,Medium,true
+186,Go to a botanical garden,Travel,Solo,Low,Short,true
+187,Start a vegetable garden,DIY,Solo,Low,Long,true
+188,Go horseback riding on a trail,Recreational,Group,Medium,Medium,false
+189,Visit a local library,Education,Solo,Free,Short,true
+190,Host a movie marathon,Social,Group,Low,Long,true
+191,Try a new yoga routine,Relaxation,Solo,Low,Medium,true
+192,Go to a local art museum,Education,Solo,Low,Short,true
+193,Take a pottery class,DIY,Solo,Medium,Medium,true
+194,Do a home improvement project,DIY,Solo,Low,Medium,true
+195,Take a cooking class,Recreational,Group,Low,Medium,true
+196,Have a DIY jewelry-making session,DIY,Solo,Low,Medium,true
+197,Take a painting class with friends,Recreational,Group,Low,Medium,true
+198,Go to a local park for a walk,Recreational,Solo,Free,Short,true
+199,Try a local food challenge,Recreational,Solo,Low,Medium,true
+200,Visit a historic battlefield,Education,Solo,Low,Medium,true
+201,Go on a photography walk,Recreational,Solo,Free,Medium,true
+202,Take a cooking class with friends,Cooking,Group,Low,Medium,true
+203,Join a community sports league,Sports,Group,Medium,Long,false
+204,Go for a nature hike,Recreational,Solo,Free,Medium,true
+205,Host a virtual game night,Social,Group,Free,Medium,true
+206,Do a DIY craft project,DIY,Solo,Low,Medium,true
+207,Attend a food festival,Travel,Group,Medium,Medium,false
+208,Create your own workout routine,Sports,Solo,Free,Medium,true
+209,Visit a local historic site,Education,Solo,Low,Medium,true
+210,Take a group fitness class,Sports,Group,Medium,Medium,false
+211,Explore a new hiking trail,Recreational,Solo,Free,Medium,true
+212,Take a pottery painting class,DIY,Solo,Low,Medium,true
+213,Go on a weekend camping trip,Travel,Group,Medium,Long,true
+214,Do a DIY science experiment,Education,Solo,Low,Medium,true
+215,Learn to juggle,Recreational,Solo,Free,Short,true
+216,Host a cooking competition,Social,Group,Low,Medium,true
+217,Try out a new type of exercise,Sports,Solo,Free,Medium,true
+218,Create a scrapbook of your travels,DIY,Solo,Low,Long,true
+219,Visit a local farmer's market,Travel,Solo,Low,Medium,true
+220,Learn about local wildlife,Education,Solo,Free,Medium,true
+221,Go for a bike ride on a trail,Sports,Solo,Free,Medium,true
+222,Start a DIY home renovation project,DIY,Solo,Low,Long,true
+223,Learn how to knit,DIY,Solo,Low,Medium,true
+224,Do a DIY art project,DIY,Solo,Low,Medium,true
+225,Attend a wine-tasting event,Social,Group,Medium,Short,false
+226,Try indoor skydiving,Sports,Solo,High,Short,false
+227,Take a weekend road trip,Travel,Group,Medium,Long,false
+228,Volunteer for a community event,Charity,Group,Free,Short,true
+229,Make a homemade gift for a friend,DIY,Solo,Low,Medium,true
+230,Go for a scenic drive,Travel,Solo,Low,Medium,true
+231,Take a nature photography class,Education,Solo,Low,Medium,true
+232,Learn a new language,Education,Solo,Free,Long,true
+233,Go on a scavenger hunt,Recreational,Group,Free,Short,true
+234,Try an obstacle course,Recreational,Solo,Free,Medium,true
+235,Take a day trip to a nearby town,Travel,Solo,Medium,Long,true
+236,Have a DIY spa day at home,Relaxation,Solo,Low,Short,true
+237,Go on a picnic with family,Social,Group,Low,Medium,true
+238,Try a new workout class,Recreational,Solo,Low,Medium,true
+239,Have a bonfire,Social,Group,Low,Short,true
+240,Go to a karaoke bar,Music,Group,Medium,Short,false
+241,Take a cooking workshop,Education,Solo,Medium,Medium,true
+242,Attend a cultural festival,Social,Group,Low,Medium,true
+243,Create a time capsule,DIY,Solo,Low,Medium,true
+244,Go to a trampoline park,Recreational,Group,Medium,Short,false
+245,Try a new type of dance,Recreational,Solo,Free,Medium,true
+246,Have a DIY ice cream sundae bar,Social,Group,Low,Short,true
+247,Visit an art gallery,Travel,Solo,Low,Short,true
+248,Take a creative writing class,Education,Solo,Low,Medium,true
+249,Learn how to bake bread,Cooking,Solo,Low,Medium,true
+250,Do a charity run,Charity,Group,Free,Medium,true
+251,Go on a photography scavenger hunt,Recreational,Solo,Free,Medium,true
+252,Take a dance class,Recreational,Group,Low,Medium,true
+253,Learn how to make sushi,Cooking,Solo,Low,Medium,true
+254,Volunteer at a local food bank,Charity,Group,Free,Medium,true
+255,Host a potluck dinner,Social,Group,Low,Long,true
+256,Go on a boat ride,Travel,Group,Medium,Medium,true
+257,Create a DIY home decoration,DIY,Solo,Low,Medium,true
+258,Learn how to juggle,Recreational,Solo,Free,Medium,true
+259,Go to an escape room,Social,Group,Medium,Short,false
+260,Take a pottery class,DIY,Group,Medium,Medium,true
+261,Visit a local zoo,Travel,Group,Low,Medium,true
+262,Do a DIY photo booth for a party,DIY,Solo,Low,Short,true
+263,Have a DIY pizza-making party,Cooking,Group,Low,Medium,true
+264,Go for a run in the park,Sports,Solo,Free,Short,true
+265,Watch the sunrise,Recreational,Solo,Free,Short,true
+266,Take a self-defense class,Education,Solo,Medium,Medium,true
+267,Try a new sport with friends,Sports,Group,Low,Medium,true
+268,Create a vision board for the year,DIY,Solo,Low,Short,true
+269,Make a short film with friends,Recreational,Group,Low,Medium,false
+270,Start a meditation practice,Relaxation,Solo,Free,Medium,true
+271,Go to a paint-and-sip class,DIY,Group,Medium,Medium,false
+272,Learn to bake cupcakes,Cooking,Solo,Low,Short,true
+273,Do a DIY home project with family,DIY,Group,Low,Long,true
+274,Go to an amusement park,Travel,Group,Medium,Medium,false
+275,Volunteer at a soup kitchen,Charity,Group,Free,Medium,true
+276,Do a DIY home improvement project,DIY,Solo,Low,Long,true
+277,Go for a paddleboat ride,Sports,Group,Low,Medium,true
+278,Take a nature walk,Recreational,Solo,Free,Short,true
+279,Host a video game tournament,Social,Group,Low,Medium,false
+280,Attend a cooking show,Social,Group,Medium,Short,false
+281,Go to a comedy show,Social,Group,Medium,Short,false
+282,Create a DIY terrarium,DIY,Solo,Low,Medium,true
+283,Make homemade bath bombs,DIY,Solo,Low,Short,true
+284,Go to a farmers market,Travel,Solo,Low,Medium,true
+285,Host a themed movie marathon,Social,Group,Low,Medium,true
+286,Do a DIY painting project,DIY,Solo,Low,Medium,true
+287,Visit a botanical garden,Travel,Solo,Low,Short,true
+288,Create a dream journal,Relaxation,Solo,Free,Medium,true
+289,Go horseback riding,Travel,Solo,Medium,Long,true
+290,Learn a new recipe every week,Cooking,Solo,Low,Medium,true
+291,Take a pottery wheel class,DIY,Solo,Medium,Medium,true
+292,Go bowling with friends,Sports,Group,Medium,Short,false
+293,Make your own soap,DIY,Solo,Low,Medium,true
+294,Attend a science fair,Education,Solo,Low,Medium,true
+295,Take a photography class,Education,Solo,Low,Medium,true
+296,Go to a jazz concert,Music,Group,Medium,Short,false
+297,Try indoor rock climbing,Sports,Solo,Medium,Medium,false
+298,Create a bucket list,Recreational,Solo,Free,Short,true
+299,Take a cooking class with a friend,Cooking,Group,Low,Medium,true
+300,Have a craft day at home,DIY,Solo,Low,Medium,true
+301,Host a virtual trivia night,Social,Group,Free,Short,true
+302,Make your own lip balm,DIY,Solo,Low,Medium,true
+303,Learn a new language,Education,Solo,Free,Long,true
+304,Go to a theme park,Travel,Group,High,Medium,false
+305,Write a letter to your future self,Relaxation,Solo,Free,Short,true
+306,Take a photography walk,Recreational,Solo,Free,Medium,true
+307,Go to a flea market,Travel,Solo,Low,Medium,true
+308,Create a scrapbook for a trip,DIY,Solo,Low,Long,true
+309,Try a new hobby,Recreational,Solo,Free,Medium,true
+310,Volunteer for a charity run,Charity,Group,Free,Medium,true
+311,Go kayaking,Sports,Solo,Medium,Long,false
+312,Learn how to knit,DIY,Solo,Low,Medium,true
+313,Go for a nature hike,Recreational,Solo,Free,Long,true
+314,Watch the sunset,Recreational,Solo,Free,Short,true
+315,Have a DIY pizza night,Social,Group,Low,Medium,true
+316,Start a daily fitness challenge,Sports,Solo,Free,Medium,true
+317,Take a cooking class with family,Cooking,Group,Medium,Medium,true
+318,Go to an art exhibit,Education,Solo,Low,Medium,true
+319,Create a DIY terrarium for your home,DIY,Solo,Low,Medium,true
+320,Host a game night with family,Social,Group,Low,Medium,true
+321,Go ice skating,Sports,Group,Medium,Medium,false
+322,Create a time capsule,DIY,Group,Low,Medium,true
+323,Go horseback riding,Travel,Group,Medium,Long,true
+324,Make your own candles,DIY,Solo,Low,Medium,true
+325,Go on a road trip,Travel,Group,High,Long,false
+326,Take a fitness class online,Sports,Solo,Free,Short,true
+327,Write a poem about your day,Relaxation,Solo,Free,Short,true
+328,Have a movie night with friends,Social,Group,Low,Medium,true
+329,Create a DIY dreamcatcher,DIY,Solo,Low,Medium,true
+330,Go to a planetarium,Education,Solo,Low,Medium,true
+331,Host a game night with neighbors,Social,Group,Low,Medium,true
+332,Take a pottery class with a friend,DIY,Group,Medium,Medium,true
+333,Learn how to make homemade soap,DIY,Solo,Low,Medium,true
+334,Have a picnic by the lake,Social,Group,Low,Medium,true
+335,Go paddleboarding,Sports,Solo,Medium,Medium,false
+336,Do a craft project with your kids,DIY,Group,Low,Short,true
+337,Take a creative writing class,Education,Solo,Low,Medium,true
+338,Visit a national park,Travel,Group,Low,Long,true
+339,Go to a poetry reading,Social,Group,Low,Short,true
+340,Make your own jewelry,DIY,Solo,Low,Medium,true
+341,Go to a brewery tour,Travel,Solo,Medium,Short,false
+342,Start a daily gratitude practice,Relaxation,Solo,Free,Short,true
+343,Create a scrapbook for your family,DIY,Solo,Low,Long,true
+344,Try out a new coffee shop,Social,Solo,Low,Short,true
+345,Learn how to do a magic trick,Recreational,Solo,Free,Medium,true
+346,Take a self-portrait photography challenge,Recreational,Solo,Free,Short,true
+347,Go fishing at a local lake,Sports,Solo,Low,Medium,true
+348,Do a jigsaw puzzle with family,Recreational,Group,Free,Medium,true
+349,Have a family game night,Social,Group,Low,Medium,true
+350,Attend a live theater show,Social,Group,Medium,Long,false
+351,Go on a nature walk,Recreational,Solo,Free,Short,true
+352,Host a virtual book club,Social,Group,Free,Medium,true
+353,Do a DIY home improvement project,DIY,Solo,Low,Long,true
+354,Take a scenic bike ride,Recreational,Solo,Free,Medium,true
+355,Attend a food festival,Travel,Group,Medium,Medium,true
+356,Learn a new skill on YouTube,Education,Solo,Free,Medium,true
+357,Go on a camping trip,Travel,Group,Low,Long,true
+358,Start a personal blog,Recreational,Solo,Free,Long,false
+359,Volunteer at a community garden,Charity,Group,Free,Medium,true
+360,Make a vision board for the year,DIY,Solo,Low,Medium,true
+361,Take a digital detox for the day,Relaxation,Solo,Free,Medium,true
+362,Go bowling with friends,Social,Group,Medium,Short,false
+363,Build a backyard fire pit,DIY,Solo,Low,Long,true
+364,Take a day trip to the beach,Travel,Group,Medium,Short,true
+365,Make a homemade smoothie bar,Cooking,Group,Low,Short,true
+366,Start a photo-a-day challenge,Recreational,Solo,Free,Medium,true
+367,Take a dance class with friends,Music,Group,Low,Medium,true
+368,Go to a local farmer's market,Travel,Solo,Low,Short,true
+369,Visit a petting zoo,Education,Group,Low,Short,true
+370,Do a random act of kindness every day,Charity,Solo,Free,Short,true
+371,Take up gardening,DIY,Solo,Low,Medium,true
+372,Have a themed movie marathon,Social,Group,Low,Medium,true
+373,Go to a historical landmark,Education,Solo,Low,Medium,true
+374,Write a thank-you letter to someone,Social,Solo,Free,Short,true
+375,Make a DIY bird feeder,DIY,Solo,Low,Medium,true
+376,Learn how to juggle,Recreational,Solo,Free,Medium,true
+377,Go to a local zoo,Travel,Solo,Low,Medium,true
+378,Try a new hobby from a YouTube tutorial,Recreational,Solo,Free,Medium,true
+379,Have a picnic in the park,Social,Group,Low,Medium,true
+380,Do a home declutter challenge,DIY,Solo,Free,Short,true
+381,Host a charity bake sale,Charity,Group,Low,Medium,true
+382,Learn how to do origami,DIY,Solo,Low,Medium,true
+383,Go to a botanical garden,Travel,Solo,Low,Medium,true
+384,Make a DIY dream journal,DIY,Solo,Low,Short,true
+385,Volunteer at a soup kitchen,Charity,Group,Free,Medium,true
+386,Take a pottery class,DIY,Group,Medium,Medium,true
+387,Have a DIY spa day,Relaxation,Solo,Low,Short,true
+388,Go rock climbing,Recreational,Solo,Medium,Medium,true
+389,Attend a local concert,Music,Group,Medium,Long,false
+390,Take up knitting,DIY,Solo,Low,Medium,true
+391,Have a backyard barbecue,Social,Group,Low,Medium,true
+392,Go to an art class,Education,Solo,Medium,Medium,false
+393,Make a scrapbook from your travels,DIY,Solo,Low,Long,true
+394,Create a DIY vision board,DIY,Solo,Low,Medium,true
+395,Go for a run with a friend,Sports,Group,Free,Medium,true
+396,Make homemade ice cream,Cooking,Group,Low,Medium,true
+397,Start a weekly cooking challenge,Cooking,Group,Low,Medium,true
+398,Learn a new language online,Education,Solo,Free,Long,true
+399,Take a fitness class with a friend,Sports,Group,Low,Medium,true
+400,Have a family trivia night,Social,Group,Low,Medium,true
+401,Do a DIY tie-dye project,DIY,Solo,Low,Medium,true
+402,Take a pottery wheel class,DIY,Group,Medium,Medium,true
+403,Visit a local farm,Education,Group,Low,Short,true
+404,Have a tea-tasting party,Social,Group,Low,Medium,true
+405,Go horseback riding,Recreational,Solo,High,Medium,true
+406,Do a virtual escape room,Social,Group,Low,Medium,true
+407,Make a DIY terrarium,DIY,Solo,Low,Medium,true
+408,Attend a local improv show,Social,Group,Medium,Medium,true
+409,Take a nature photography walk,Recreational,Solo,Free,Medium,true
+410,Write a letter to a friend,Social,Solo,Free,Short,true
+411,Go ice fishing,Recreational,Solo,Medium,Long,true
+412,Have a DIY costume party,Social,Group,Low,Medium,true
+413,Try stand-up paddleboarding,Sports,Solo,High,Medium,true
+414,Make homemade soap,DIY,Solo,Low,Medium,true
+415,Do a home fitness challenge,Recreational,Solo,Free,Medium,true
+416,Go for a bike ride on a trail,Recreational,Solo,Free,Medium,true
+417,Host a virtual talent show,Social,Group,Free,Medium,true
+418,Start a vegetable garden,DIY,Solo,Low,Long,true
+419,Attend a writing workshop,Education,Group,Medium,Medium,false
+420,Go on a weekend hiking trip,Travel,Group,High,Long,true
+421,Host a breakfast potluck,Social,Group,Low,Short,true
+422,Do a DIY home renovation project,DIY,Solo,Low,Long,true
+423,Go zip-lining,Recreational,Solo,High,Medium,true
+424,Host a book swap,Social,Group,Low,Medium,true
+425,Take a pottery painting class,DIY,Group,Medium,Medium,true
+426,Take a cooking class with a friend,Cooking,Group,Low,Medium,false
+427,Make a DIY scrapbook,DIY,Solo,Low,Long,true
+428,Go to a local public library,Education,Solo,Free,Short,true
+429,Try indoor trampoline park,Recreational,Group,Medium,Short,true
+430,Attend a nature walk,Education,Solo,Free,Short,true
+431,Do a charity walk,Charity,Group,Free,Medium,true
+432,Watch the sunset from a mountain,Recreational,Solo,Free,Short,true
+433,Go to a beach bonfire,Social,Group,Medium,Short,true
+434,Take a hot air balloon ride,Recreational,Solo,High,Short,true
+435,Create an art piece from recyclables,DIY,Solo,Low,Medium,true
+436,Take a cooking class for desserts,Cooking,Group,Low,Medium,false
+437,Host a "game night" with friends,Social,Group,Low,Medium,true
+438,Attend a fashion show,Social,Group,Medium,Medium,false
+439,Go rock climbing at an indoor gym,Sports,Solo,Medium,Medium,true
+440,Volunteer at an animal shelter,Charity,Group,Free,Medium,true
+441,Host a bake-off,Social,Group,Low,Medium,true
+442,Do a home decluttering challenge,DIY,Solo,Free,Medium,true
+443,Learn to make sushi,DIY,Group,Low,Medium,false
+444,Take a pottery-making class,DIY,Solo,Medium,Medium,true
+445,Go ice skating with friends,Social,Group,Medium,Short,true
+446,Have a spa day at home,Relaxation,Solo,Low,Short,true
+447,Try a new type of yoga,Relaxation,Solo,Low,Medium,true
+448,Join a local community service event,Charity,Group,Free,Medium,true
+449,Watch a documentary marathon,Education,Solo,Free,Long,true
+450,Try a new type of coffee,Relaxation,Solo,Low,Short,true
+451,Create a vision board,DIY,Solo,Free,Medium,true
+452,Go on a nature scavenger hunt,Recreational,Group,Free,Medium,true
+453,Take a self-defense class,Education,Group,Low,Medium,false
+454,Learn a new magic trick,Recreational,Solo,Low,Short,true
+455,Host a craft night,Social,Group,Low,Medium,true
+456,Do a DIY lip balm project,DIY,Solo,Low,Medium,true
+457,Visit an aquarium,Travel,Solo,Medium,Short,true
+458,Go on a food tasting tour,Travel,Group,Medium,Medium,true
+459,Go on a photography walk,Recreational,Solo,Free,Medium,true
+460,Attend a film festival,Social,Group,Medium,Long,false
+461,Write a short story,Writing,Solo,Free,Long,true
+462,Take a dance class,Recreational,Group,Low,Medium,false
+463,Learn origami,DIY,Solo,Free,Short,true
+464,Attend a public speaking workshop,Education,Group,Medium,Short,false
+465,Go on a hot spring retreat,Travel,Solo,High,Long,true
+466,Host a DIY beauty product party,Social,Group,Low,Medium,true
+467,Do a nature meditation,Relaxation,Solo,Free,Short,true
+468,Take a pottery class,DIY,Solo,Low,Medium,true
+469,Create a DIY escape room,Recreational,Group,Low,Medium,true
+470,Do a cooking challenge with friends,Cooking,Group,Low,Medium,true
+471,Go for a jog in a new park,Recreational,Solo,Free,Medium,true
+472,Host a movie marathon,Social,Group,Low,Medium,true
+473,Visit a nearby national park,Travel,Solo,Medium,Long,true
+474,Take a sailing lesson,Recreational,Solo,High,Medium,true
+475,Do a garden-to-table meal,DIY,Solo,Low,Long,true
+476,Have a DIY pizza night,Social,Group,Low,Medium,true
+477,Try a new hobby for a day,Recreational,Solo,Free,Short,true
+478,Do a home DIY renovation project,DIY,Solo,Low,Long,true
+479,Attend a local theater performance,Social,Group,Medium,Medium,true
+480,Create a daily affirmation journal,Relaxation,Solo,Free,Short,true
+481,Go on a road trip to a new destination,Travel,Group,High,Long,false
+482,Visit a local zoo,Travel,Solo,Medium,Short,true
+483,Do a cooking tutorial with a friend,Cooking,Group,Low,Medium,false
+484,Make homemade ice cream,DIY,Solo,Low,Medium,true
+485,Do a puzzle with family,Recreational,Group,Free,Medium,true
+486,Take a group fitness class,Sports,Group,Low,Medium,true
+487,Have a "do nothing" day,Recreational,Solo,Free,Long,true
+488,Go for a bike ride in a new area,Recreational,Solo,Free,Medium,true
+489,Host a DIY workshop,Social,Group,Low,Medium,true
+490,Do a digital detox,Relaxation,Solo,Free,Long,true
+491,Make a vision board for the year,DIY,Solo,Free,Medium,true
+492,Take a virtual painting class,Recreational,Solo,Medium,Long,true
+493,Attend a community gardening event,Charity,Group,Free,Medium,true
+494,Make a time-lapse video of a project,DIY,Solo,Free,Long,true
+495,Host a trivia night with friends,Social,Group,Low,Medium,true
+496,Do a DIY home decor project,DIY,Solo,Low,Medium,true
+497,Visit a historical landmark,Travel,Solo,Low,Medium,true
+498,Take a pottery painting workshop,DIY,Group,Medium,Medium,true
+499,Do a DIY bird-watching project,DIY,Solo,Low,Medium,true
+500,Take a painting class,DIY,Solo,Medium,Medium,true
+501, Take an online course on data analysis, Education, Solo, Low, Medium, true
+502, Study for a certification exam in cloud computing, Education, Solo, High, Long, true
+503, Watch a documentary on the evolution of technology, Education, Solo, Free, Medium, true
+504, Take a course on public speaking, Education, Solo, Low, Medium, true
+505, Join an online book club to discuss literature, Education, Group, Free, Medium, true
+506, Learn a new programming language, Education, Solo, Free, Long, true
+507, Take an introductory course on machine learning, Education, Solo, Free, Long, true
+508, Watch tutorials on advanced Excel functions, Education, Solo, Free, Medium, true
+509, Attend a webinar on personal finance management, Education, Solo, Low, Medium, true
+510, Take an online course on design thinking, Education, Solo, Free, Long, true
+511, Read a book on digital transformation in businesses, Education, Solo, Medium, Long, true
+512, Take a philosophy course to enhance critical thinking, Education, Solo, Low, Long, true
+513, Learn about the latest trends in artificial intelligence, Education, Solo, Free, Medium, true
+514, Study environmental science through a free online course, Education, Solo, Free, Long, true
+515, Create a personal development plan, Education, Solo, Free, Medium, true
+516, Attend a seminar on time management strategies, Education, Solo, Low, Medium, true
+517, Study the fundamentals of entrepreneurship, Education, Solo, Free, Medium, true
+518, Take a course on advanced statistics for data science, Education, Solo, Free, Long, true
+519, Learn about UX/UI design principles, Education, Solo, Free, Medium, true
+520, Study the history of computer science, Education, Solo, Free, Medium, true
+521, Take an online coding bootcamp, Education, Solo, Medium, Long, true
+522, Read a book on cognitive psychology, Education, Solo, Medium, Long, true
+523, Take a free online course on social media strategy, Education, Solo, Free, Medium, true
+524, Study a new foreign language using a language app, Education, Solo, Free, Long, true
+525, Join an online course for data visualization with Tableau, Education, Solo, Low, Medium, true
+526, Take an online course on digital marketing analytics, Education, Solo, Free, Long, true
+527, Study financial literacy for entrepreneurs, Education, Solo, Free, Medium, true
+528, Watch TED Talks on leadership and innovation, Education, Solo, Free, Medium, true
+529, Learn about blockchain technology through a course, Education, Solo, Low, Long, true
+530, Study about bioinformatics and its applications, Education, Solo, Free, Long, true
+531, Take a course on project management methodologies, Education, Solo, Medium, Long, true
+532, Learn the basics of ethical hacking, Education, Solo, Low, Medium, true
+533, Study basic concepts of quantum physics, Education, Solo, Free, Long, true
+534, Take a course in digital illustration, Education, Solo, Low, Medium, true
+535, Learn about sustainability and green energy, Education, Solo, Free, Medium, true
+536, Join an online coding challenge platform, Education, Solo, Free, Long, true
+537, Study the principles of graphic design, Education, Solo, Low, Long, true
+538, Read a book on emotional intelligence, Education, Solo, Medium, Long, true
+539, Take an online course on artificial intelligence ethics, Education, Solo, Free, Long, true
+540, Learn the basics of cloud computing with AWS, Education, Solo, Free, Long, true
+541, Study the principles of behavioral economics, Education, Solo, Free, Long, true
+542, Take an online photography course, Education, Solo, Low, Medium, true
+543, Learn to create your own website, Education, Solo, Free, Medium, true
+544, Take an online course on financial planning for young adults, Education, Solo, Low, Medium, true
+545, Study the fundamentals of blockchain development, Education, Solo, Free, Long, true
+546, Attend a live webinar on data privacy and security, Education, Solo, Free, Medium, true
+547, Learn about the history of art movements, Education, Solo, Medium, Long, true
+548, Take an online course on health and nutrition, Education, Solo, Free, Medium, true
+549, Watch a documentary on the evolution of the internet, Education, Solo, Free, Medium, true
+550, Study the fundamentals of renewable energy, Education, Solo, Free, Long, true
+551, Take a course in machine learning for beginners, Education, Solo, Free, Long, true
+552, Learn how to code in JavaScript, Education, Solo, Free, Medium, true
+553, Study international relations through a free online course, Education, Solo, Free, Long, true
+554, Take an online course on the science of happiness, Education, Solo, Free, Medium, true
+555, Learn about the human genome and genetic research, Education, Solo, Free, Long, true
+556, Study the art of negotiation and persuasion, Education, Solo, Free, Medium, true
+557, Take an online course on database management with SQL, Education, Solo, Free, Long, true
+558, Learn to build your own mobile app, Education, Solo, Free, Medium, true
+559, Study the history of the Renaissance, Education, Solo, Low, Medium, true
+560, Take an online course on sustainable agriculture, Education, Solo, Free, Long, true
+561, Learn about the psychology of color in marketing, Education, Solo, Free, Medium, true
+562, Take a course on the fundamentals of entrepreneurship, Education, Solo, Free, Medium, true
+563, Study the impact of social media on modern communication, Education, Solo, Free, Medium, true
+564, Take a free online course on artificial intelligence, Education, Solo, Free, Long, true
+565, Learn the basics of data analytics with Python, Education, Solo, Free, Long, true
+566, Study the evolution of human civilization, Education, Solo, Low, Long, true
+567, Take a course on personal branding and career growth, Education, Solo, Low, Medium, true
+568, Learn about the science of climate change, Education, Solo, Free, Long, true
+569, Study the basics of digital photography, Education, Solo, Free, Medium, true
+570, Take an online course in public relations, Education, Solo, Free, Medium, true
+571, Learn about the history of space exploration, Education, Solo, Free, Medium, true
+572, Study statistics for data analysis, Education, Solo, Free, Medium, true
+573, Take a creative writing course, Education, Solo, Low, Medium, true
+574, Learn about the fundamentals of human rights, Education, Solo, Free, Long, true
+575, Study the history of economics and major theories, Education, Solo, Free, Long, true
+576, Try rock climbing for the first time, Sports, Solo, Medium, Medium, true
+577, Take a martial arts class, Sports, Solo, Low, Medium, true
+578, Participate in a 5K charity run, Sports, Group, Low, Medium, true
+579, Try a new water sport like paddleboarding, Sports, Solo, Low, Medium, true
+580, Join a local soccer league, Sports, Group, Low, Medium, true
+581, Take a yoga class for flexibility, Sports, Solo, Low, Medium, true
+582, Go for a hike in a scenic mountain trail, Sports, Solo, Free, Medium, true
+583, Take a cycling tour of a nearby city, Sports, Solo, Low, Medium, true
+584, Attend a local sports event as a fan, Sports, Group, Low, Medium, true
+585, Try indoor skydiving for an adrenaline rush, Sports, Solo, High, Medium, true
+586, Play a round of golf with friends, Sports, Group, Low, Medium, true
+587, Take a swimming lesson to improve technique, Sports, Solo, Low, Medium, true
+588, Join a recreational tennis league, Sports, Group, Low, Medium, true
+589, Take a group boxing class for fitness, Sports, Group, Low, Medium, true
+590, Try a CrossFit workout, Sports, Solo, Medium, Medium, true
+591, Go roller skating or rollerblading, Sports, Solo, Low, Medium, true
+592, Try a high-intensity interval training (HIIT) workout, Sports, Solo, Low, Medium, true
+593, Participate in a volleyball tournament, Sports, Group, Low, Medium, true
+594, Try kickboxing for fitness, Sports, Solo, Medium, Medium, true
+595, Take a rock climbing class for beginners, Sports, Solo, Low, Medium, true
+596, Join a local softball league, Sports, Group, Low, Medium, true
+597, Take a dance class for fitness, Sports, Solo, Low, Medium, true
+598, Try a triathlon for the first time, Sports, Solo, High, Long, true
+599, Go for a long-distance run in a scenic location, Sports, Solo, Free, Long, true
+600, Take a Pilates class for core strength, Sports, Solo, Low, Medium, true
+601, Try a boxing workout for strength and cardio, Sports, Solo, Medium, Medium, true
+602, Do a family fun run in your neighborhood, Sports, Group, Low, Medium, true
+603, Take a ski or snowboard lesson, Sports, Solo, High, Long, true
+604, Join a local basketball league, Sports, Group, Low, Medium, true
+605, Take a paddleboarding lesson, Sports, Solo, Low, Medium, true
+606, Go for a long bike ride along the coast, Sports, Solo, Free, Long, true
+607, Try bouldering at a local climbing gym, Sports, Solo, Medium, Medium, true
+608, Participate in a team relay race, Sports, Group, Low, Medium, true
+609, Take a kickboxing class for cardio and strength, Sports, Group, Low, Medium, true
+610, Join a local ultimate frisbee league, Sports, Group, Low, Medium, true
+611, Take a surfing lesson, Sports, Solo, Medium, Medium, true
+612, Do a morning jog on the beach, Sports, Solo, Free, Medium, true
+613, Try a parkour class for agility, Sports, Solo, Low, Medium, true
+614, Join a rowing or crew team, Sports, Group, Low, Medium, true
+615, Try a high ropes course for adventure and strength, Sports, Solo, High, Medium, true
+616, Take a snowshoeing excursion, Sports, Solo, Medium, Long, true
+617, Participate in a local sports competition, Sports, Group, Low, Medium, true
+618, Try a long-distance cycling event, Sports, Solo, Medium, Long, true
+619, Go to a trampoline park for fun and fitness, Sports, Group, Low, Medium, true
+620, Take a hiking challenge on a famous trail, Sports, Solo, Free, Long, true
+621, Take a long, relaxing bath with essential oils, Relaxation, Solo, Low, Short, true
+622, Try a guided sleep meditation, Relaxation, Solo, Free, Short, true
+623, Go for a walk in a quiet garden, Relaxation, Solo, Free, Medium, true
+624, Practice deep breathing exercises, Relaxation, Solo, Free, Short, true
+625, Do a stretching routine before bed, Relaxation, Solo, Free, Short, true
+626, Take a nap in a cozy space, Relaxation, Solo, Free, Short, true
+627, Try a sensory deprivation float session, Relaxation, Solo, High, Medium, true
+628, Listen to soothing music while lying down, Relaxation, Solo, Free, Short, true
+629, Read a book in a peaceful park, Relaxation, Solo, Low, Medium, true
+630, Practice mindfulness meditation, Relaxation, Solo, Free, Medium, true
+631, Do a body scan relaxation exercise, Relaxation, Solo, Free, Medium, true
+632, Have a quiet tea ceremony for yourself, Relaxation, Solo, Low, Medium, true
+633, Do some light journaling for mental clarity, Relaxation, Solo, Free, Short, true
+634, Try an aromatherapy session with calming scents, Relaxation, Solo, Low, Medium, true
+635, Enjoy a sunset while practicing mindfulness, Relaxation, Solo, Free, Medium, true
+636, Spend time watching fish in an aquarium, Relaxation, Solo, Low, Medium, true
+637, Do a guided relaxation body scan before bed, Relaxation, Solo, Free, Short, true
+638, Take a day off from all digital devices, Relaxation, Solo, Free, Long, true
+639, Go for a walk in the rain with no umbrella, Relaxation, Solo, Free, Medium, true
+640, Have a quiet time for reflection in a comfortable spot, Relaxation, Solo, Free, Medium, true
+641, Try a progressive muscle relaxation technique, Relaxation, Solo, Free, Medium, true
+642, Watch a calming nature documentary, Relaxation, Solo, Low, Medium, true
+643, Take a mindfulness hike in a scenic area, Relaxation, Solo, Free, Medium, true
+644, Do some yoga stretches in the morning sun, Relaxation, Solo, Free, Medium, true
+645, Create a peaceful reading nook with soft lighting, Relaxation, Solo, Low, Medium, true
+646, Spend time with a pet to relax, Relaxation, Solo, Free, Medium, true
+647, Try a healing crystal meditation session, Relaxation, Solo, Low, Medium, true
+648, Sit outside and watch the stars for a while, Relaxation, Solo, Free, Medium, true
+649, Do a breathing exercise in a quiet spot, Relaxation, Solo, Free, Short, true
+650, Try a warm foot soak with calming salts, Relaxation, Solo, Low, Medium, true
