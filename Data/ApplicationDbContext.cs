@@ -44,5 +44,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Activity>().HasData(GetActivities());
+        modelBuilder.Entity<ApplicationUser>()
+        .HasMany(a => a.Activities)
+        .WithMany(a => a.SavedByUsers)
+        .UsingEntity(j => j.ToTable("UserSavedActivities"));
     }
 } // end of class
