@@ -7,23 +7,23 @@
 
 @inject ActivityService ActivityService
 
-<h3 class="text-xl font-bold mb-4">Find a Random Activity</h3>
+<div class="d-flex flex-column align-items-center justify-content-center mt-5">
+    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4" @onclick="LoadRandomActivity">
+        ✨ I am bored ✨
+    </button>
 
-<button class="rainbow-btn btn btn-lg text-black fw-bold px-4 py-2 rounded-pill" @onclick="LoadRandomActivity">
-    ✨ Click Me! ✨
-</button>
-
-@if (activity != null)
-{
-    <div class="mt-4 p-4 border rounded shadow bg-white max-w-md">
-        <h4 class="text-lg font-semibold" style="color: @randomColor">@activity.Title</h4>
-        <p><strong>Type:</strong> @activity.Type</p>
-        <p><strong>Participants:</strong> @activity.Participants</p>
-        <p><strong>Price:</strong> @activity.Price</p>
-        <p><strong>Duration:</strong> @activity.ActivityDuration</p>
-        <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
-    </div>
-}
+    @if (activity != null)
+    {
+        <div class="mt-4 p-4 border rounded shadow bg-white" style="width: 100%; max-width: 800px;">
+            <h4 class="text-lg font-semibold text-center" style="color: @randomColor">@activity.Title</h4>
+            <p><strong>Type:</strong> @activity.Type</p>
+            <p><strong>Participants:</strong> @activity.Participants</p>
+            <p><strong>Price:</strong> @activity.Price</p>
+            <p><strong>Duration:</strong> @activity.ActivityDuration</p>
+            <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
+        </div>
+    }
+</div>
 
 @code {
     private Activity? activity;
