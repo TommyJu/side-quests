@@ -55,6 +55,5 @@ public enum ActivityPrice
 public enum ActivityParticipants
 {
     Solo,
-    Group,
-    Any
+    Group
 }

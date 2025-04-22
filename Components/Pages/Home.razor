@@ -8,7 +8,50 @@
 @inject ActivityService ActivityService
 
 <div class="d-flex flex-column align-items-center justify-content-center mt-5">
-    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4" @onclick="LoadRandomActivity">
+<!-- Filters: Horizontal Layout -->
+<div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
+
+    <select class="form-select w-auto" @bind="selectedType">
+        <option value="">All Types</option>
+        @foreach (var type in Enum.GetValues<ActivityType>())
+        {
+            <option value="@type">@type</option>
+        }
+    </select>
+
+    <select class="form-select w-auto" @bind="selectedParticipants">
+        <option value="">All Participants</option>
+        @foreach (var p in Enum.GetValues<ActivityParticipants>())
+        {
+            <option value="@p">@p</option>
+        }
+    </select>
+
+    <select class="form-select w-auto" @bind="selectedPrice">
+        <option value="">All Prices</option>
+        @foreach (var p in Enum.GetValues<ActivityPrice>())
+        {
+            <option value="@p">@p</option>
+        }
+    </select>
+
+    <select class="form-select w-auto" @bind="selectedDuration">
+        <option value="">All Durations</option>
+        @foreach (var d in Enum.GetValues<ActivityDuration>())
+        {
+            <option value="@d">@d</option>
+        }
+    </select>
+
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="kidFriendly" @bind="onlyKidFriendly" />
+        <label class="form-check-label" for="kidFriendly">Kid Friendly</label>
+    </div>
+
+</div>
+
+
+    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4" @onclick="LoadFilteredActivity">
         ✨ I am bored ✨
     </button>
 
@@ -23,18 +66,38 @@
             <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
         </div>
     }
+    else if (hasSearched)
+    {
+        <div class="alert alert-warning mt-3">No activities found with these filters 😢</div>
+    }
 </div>
 
 @code {
     private Activity? activity;
     // Activity title color
     private string randomColor = "black";
-    private async Task LoadRandomActivity()
+    // This is used to show a message when no activity is found after a search
+    private bool hasSearched = false;
+
+    // Filters
+    private ActivityType? selectedType = null;
+    private ActivityParticipants? selectedParticipants = null;
+    private ActivityPrice? selectedPrice = null;
+    private ActivityDuration? selectedDuration = null;
+    private bool onlyKidFriendly = false;
+
+    private async Task LoadFilteredActivity()
     {
         randomColor = GetRandomColor();
-        activity = await ActivityService.GetRandomActivity();
+        activity = await ActivityService.GetFilteredRandomActivity(
+            selectedType,
+            selectedParticipants,
+            selectedPrice,
+            selectedDuration,
+            onlyKidFriendly ? true : null
+        );
+        hasSearched = true;
     }
-
     // Generate a random color (excluding white)
     private string GetRandomColor()
     {
