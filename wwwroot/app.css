@@ -1,9 +1,28 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Comic Sans MS",'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 a, .btn-link {
     color: #006bb7;
+}
+
+.rainbow-btn {
+    background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
+    background-size: 800% 800%;
+    animation: rainbow 6s ease infinite;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rainbow-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .btn-primary {

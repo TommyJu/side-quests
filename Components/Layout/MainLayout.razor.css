@@ -9,8 +9,24 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(135deg, #ff007f, #7f00ff, #00ff7f, #ff7f00, #00ffff);
+    background-size: 400% 400%; /* Larger background for smoother motion */
+    animation: rollingRainbow 20s linear infinite;
 }
+
+/* Define the rolling animation for the rainbow effect */
+@keyframes rollingRainbow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
 
 .top-row {
     background-color: #f7f7f7;

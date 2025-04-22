@@ -1,7 +1,45 @@
 ﻿@page "/"
+@using im_bored.Models
+@using im_bored.Services
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@inject ActivityService ActivityService
 
-Welcome to your new app.
+<h3 class="text-xl font-bold mb-4">Find a Random Activity</h3>
+
+<button class="rainbow-btn btn btn-lg text-black fw-bold px-4 py-2 rounded-pill" @onclick="LoadRandomActivity">
+    ✨ Click Me! ✨
+</button>
+
+@if (activity != null)
+{
+    <div class="mt-4 p-4 border rounded shadow bg-white max-w-md">
+        <h4 class="text-lg font-semibold" style="color: @randomColor">@activity.Title</h4>
+        <p><strong>Type:</strong> @activity.Type</p>
+        <p><strong>Participants:</strong> @activity.Participants</p>
+        <p><strong>Price:</strong> @activity.Price</p>
+        <p><strong>Duration:</strong> @activity.ActivityDuration</p>
+        <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
+    </div>
+}
+
+@code {
+    private Activity? activity;
+    // Activity title color
+    private string randomColor = "black";
+    private async Task LoadRandomActivity()
+    {
+        randomColor = GetRandomColor();
+        activity = await ActivityService.GetRandomActivity();
+    }
+
+    // Generate a random color (excluding white)
+    private string GetRandomColor()
+    {
+        Random rand = new Random();
+        string[] colors = { "red", "green", "blue", "yellow", "purple", "orange", "pink", "brown", "gray" };
+        return colors[rand.Next(colors.Length)];
+    }
+}

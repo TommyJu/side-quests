@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using im_bored.Components;
 using im_bored.Components.Account;
 using im_bored.Data;
+using im_bored.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddScoped<ActivityService>();
 
 var app = builder.Build();
 
