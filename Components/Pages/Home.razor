@@ -1,69 +1,85 @@
 ﻿@page "/"
+@using System.Security.Claims
 @using im_bored.Models
 @using im_bored.Services
 @rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthProvider
 
 <PageTitle>Home</PageTitle>
 
 @inject ActivityService ActivityService
 
-<div class="d-flex flex-column align-items-center justify-content-center mt-5">
-<!-- Filters: Horizontal Layout -->
-<div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
+<div class="d-flex flex-column align-items-center justify-content-center mt-2">
+    <!-- Filters: Horizontal Layout -->
+    <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
 
-    <select class="form-select w-auto" @bind="selectedType">
-        <option value="">All Types</option>
-        @foreach (var type in Enum.GetValues<ActivityType>())
-        {
-            <option value="@type">@type</option>
-        }
-    </select>
+        <select class="form-select w-auto" @bind="selectedType">
+            <option value="">All Types</option>
+            @foreach (var type in Enum.GetValues<ActivityType>())
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
 
-    <select class="form-select w-auto" @bind="selectedParticipants">
-        <option value="">All Participants</option>
-        @foreach (var p in Enum.GetValues<ActivityParticipants>())
-        {
-            <option value="@p">@p</option>
-        }
-    </select>
+        <select class="form-select w-auto" @bind="selectedParticipants">
+            <option value="">All Participants</option>
+            @foreach (var p in Enum.GetValues<ActivityParticipants>())
+            {
+                <option value="@p">@p</option>
+            }
+        </select>
 
-    <select class="form-select w-auto" @bind="selectedPrice">
-        <option value="">All Prices</option>
-        @foreach (var p in Enum.GetValues<ActivityPrice>())
-        {
-            <option value="@p">@p</option>
-        }
-    </select>
+        <select class="form-select w-auto" @bind="selectedPrice">
+            <option value="">All Prices</option>
+            @foreach (var p in Enum.GetValues<ActivityPrice>())
+            {
+                <option value="@p">@p</option>
+            }
+        </select>
 
-    <select class="form-select w-auto" @bind="selectedDuration">
-        <option value="">All Durations</option>
-        @foreach (var d in Enum.GetValues<ActivityDuration>())
-        {
-            <option value="@d">@d</option>
-        }
-    </select>
+        <select class="form-select w-auto" @bind="selectedDuration">
+            <option value="">All Durations</option>
+            @foreach (var d in Enum.GetValues<ActivityDuration>())
+            {
+                <option value="@d">@d</option>
+            }
+        </select>
 
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="kidFriendly" @bind="onlyKidFriendly" />
-        <label class="form-check-label" for="kidFriendly">Kid Friendly</label>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="kidFriendly" @bind="onlyKidFriendly" />
+            <label class="form-check-label" for="kidFriendly">Kid Friendly</label>
+        </div>
+
     </div>
 
-</div>
 
-
-    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4" @onclick="LoadFilteredActivity">
+    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4"
+        @onclick="LoadFilteredActivity">
         ✨ I am bored ✨
     </button>
 
     @if (activity != null)
     {
-        <div class="mt-4 p-4 border rounded shadow bg-white" style="width: 100%; max-width: 800px;">
+        <div class="mt-4 mb-4 p-4 border rounded shadow bg-white" style="width: 100%; max-width: 800px;">
             <h4 class="text-lg font-semibold text-center" style="color: @randomColor">@activity.Title</h4>
             <p><strong>Type:</strong> @activity.Type</p>
             <p><strong>Participants:</strong> @activity.Participants</p>
             <p><strong>Price:</strong> @activity.Price</p>
             <p><strong>Duration:</strong> @activity.ActivityDuration</p>
             <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
+@if (isAuthenticated)
+{
+    <div class="d-flex justify-content-end mt-3">
+        @if (activitySaved)
+        {
+            <div class="alert alert-success mb-0 py-2 px-3">🎉 Activity saved!</div>
+        }
+        else
+        {
+            <button class="btn btn-dark" @onclick="SaveActivity">❤️ Save Activity</button>
+        }
+    </div>
+}
         </div>
     }
     else if (hasSearched)
@@ -73,11 +89,22 @@
 </div>
 
 @code {
+    private ClaimsPrincipal? currentUser;
+    private bool isAuthenticated = false;
+    private AuthenticationState? authState;
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await AuthProvider.GetAuthenticationStateAsync();
+        currentUser = authState.User;
+        isAuthenticated = currentUser.Identity?.IsAuthenticated ?? false;
+    }
     private Activity? activity;
     // Activity title color
     private string randomColor = "black";
     // This is used to show a message when no activity is found after a search
     private bool hasSearched = false;
+    // This is used to show a message when an activity is successfully saved
+    private bool activitySaved = false;
 
     // Filters
     private ActivityType? selectedType = null;
@@ -90,13 +117,14 @@
     {
         randomColor = GetRandomColor();
         activity = await ActivityService.GetFilteredRandomActivity(
-            selectedType,
-            selectedParticipants,
-            selectedPrice,
-            selectedDuration,
-            onlyKidFriendly ? true : null
+        selectedType,
+        selectedParticipants,
+        selectedPrice,
+        selectedDuration,
+        onlyKidFriendly ? true : null
         );
         hasSearched = true;
+        activitySaved = false; // Reset the saved state for new activity
     }
     // Generate a random color (excluding white)
     private string GetRandomColor()
@@ -104,5 +132,19 @@
         Random rand = new Random();
         string[] colors = { "red", "green", "blue", "yellow", "purple", "orange", "pink", "brown", "gray" };
         return colors[rand.Next(colors.Length)];
+    }
+
+    private async Task SaveActivity()
+    {
+        if (activity == null) return;
+        
+        var user = authState?.User;
+        if (user == null) return;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            await ActivityService.SaveActivityAsync(user, activity);
+            activitySaved = true;
+        }
     }
 }
