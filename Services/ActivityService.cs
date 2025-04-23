@@ -12,6 +12,7 @@ public class ActivityService(
     ApplicationDbContext _context,
     UserManager<ApplicationUser> _userManager)
 {
+    public const int POINTS_GAINED_PER_ACTIVITY = 5;
     // Select random activity from the database
     public async Task<Activity> GetRandomActivity()
     {
@@ -79,13 +80,39 @@ public class ActivityService(
         var user = await _userManager.GetUserAsync(principal);
         if (user == null || activity == null) return;
 
-        // Attach tracked entities if necessary
-        _context.Attach(user);
-        _context.Attach(activity);
+        var dbActivity = await _context.Activities.FindAsync(activity.Id);
+        if (dbActivity == null) return;
 
-        if (user.Activities.Any(a => a.Id == activity.Id))
+        _context.Attach(user);
+
+        if (user.Activities.Any(a => a.Id == dbActivity.Id))
         {
-            user.Activities.Remove(activity);
+            user.Activities.Remove(dbActivity);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    /*
+            * Complete activity and gain points
+            * @param principal The ClaimsPrincipal of the user
+            * @param activity The activity to complete
+            * @return Task representing the asynchronous operation
+    */
+
+    public async Task CompleteActivityAsync(ClaimsPrincipal principal, Activity activity)
+    {
+        var user = await _userManager.GetUserAsync(principal);
+        if (user == null) return;
+
+        var dbActivity = await _context.Activities.FindAsync(activity.Id);
+        if (dbActivity == null) return;
+
+        _context.Attach(user);
+
+        if (user.Activities.Any(a => a.Id == dbActivity.Id))
+        {
+            user.Activities.Remove(dbActivity);
+            user.Points += POINTS_GAINED_PER_ACTIVITY;
             await _context.SaveChangesAsync();
         }
     }

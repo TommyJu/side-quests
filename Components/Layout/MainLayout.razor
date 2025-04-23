@@ -1,4 +1,10 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using im_bored.Data
+@using im_bored.Services
+@inject AuthenticationStateProvider AuthProvider
+@inject UserManager<ApplicationUser> UserManager
 
 <div class="page">
     <div class="sidebar">
@@ -6,9 +12,20 @@
     </div>
 
     <main>
-        @* <div class="top-row px-4">
-
-        </div> *@
+        <div class="top-row px-4">
+            @if (isAuthenticated)
+            {
+                <div class="user-info">
+                    <span><strong>Your Points:</strong> @userPoints</span>
+                </div>
+            }
+            else
+            {
+                <div class="user-info">
+                    <span>You are not logged in.</span>
+                </div>
+            }
+        </div>
 
         <article class="content px-4">
             @Body
@@ -21,3 +38,26 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private bool isAuthenticated = false;
+    private string? userEmail;
+    private int userPoints;
+
+    // Define EventCallback to update points
+    [Parameter] public EventCallback<int> OnPointsUpdated { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+
+        if (isAuthenticated)
+        {
+            var appUser = await UserManager.GetUserAsync(user);
+            userPoints = appUser?.Points ?? 0;
+        }
+    }
+}

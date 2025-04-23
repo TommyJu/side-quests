@@ -1,15 +1,26 @@
 ﻿@page "/saved"
 @using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using im_bored.Components.Layout
+@using im_bored.Data
 @using im_bored.Models
 @using im_bored.Services
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
 @rendermode InteractiveServer
-@inject ActivityService ActivityService
 @inject AuthenticationStateProvider AuthProvider
+@inject ActivityService ActivityService
+@inject UserManager<ApplicationUser> UserManager
+
+@inherits LayoutComponentBase
 
 <PageTitle>Saved Activities</PageTitle>
 
 <h2 class="text-center mt-4">📚 Your Saved Activities</h2>
-
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
+}
 @if (!isAuthenticated)
 {
     <div class="alert alert-warning mt-3 text-center">
@@ -47,17 +58,28 @@ else
                         <p><strong>Price:</strong> @a.Price</p>
                         <p><strong>Duration:</strong> @a.ActivityDuration</p>
                         <p><strong>Kid Friendly:</strong> @(a.kidFriendly ? "Yes" : "No")</p>
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-success" @onclick="() => CompleteActivityAsync(a)">
+                                ✅ Complete
+                            </button>
+
+                            <button class="btn btn-danger" @onclick="() => RemoveActivityAsync(a)">
+                                ❌ Remove
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
-
 }
 
 @code {
     private List<Activity>? savedActivities;
     private bool isAuthenticated = false;
+    private string? successMessage;
+
+    [CascadingParameter] public MainLayout? Layout { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,4 +92,44 @@ else
             savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
         }
     }
+
+    private async Task ShowSuccess(string message)
+    {
+        successMessage = message;
+        StateHasChanged();
+        await Task.Delay(3000);
+        successMessage = null;
+        StateHasChanged();
+    }
+
+private async Task CompleteActivityAsync(Activity activity)
+{
+    var authState = await AuthProvider.GetAuthenticationStateAsync();
+    var user = authState.User;
+
+
+        // Complete the activity (you can update user points here as well)
+        await ActivityService.CompleteActivityAsync(user, activity);
+
+        // Update UI
+        savedActivities?.Remove(activity);
+
+        // Show success message
+
+}
+
+private async Task RemoveActivityAsync(Activity activity)
+{
+    var authState = await AuthProvider.GetAuthenticationStateAsync();
+    var user = authState.User;
+
+    // Get the current user from UserManager
+    var appUser = await UserManager.GetUserAsync(user);
+
+        await ActivityService.RemoveActivityAsync(user, activity);
+
+        savedActivities?.Remove(activity);
+        await ShowSuccess($"🗑️ Removed \"{activity.Title}\" from your saved list.");
+}
+
 }

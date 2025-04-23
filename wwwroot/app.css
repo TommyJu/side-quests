@@ -6,6 +6,30 @@ a, .btn-link {
     color: #006bb7;
 }
 
+.animated-message {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.animated-message.fade-out {
+    opacity: 0;
+}
+
+.fade-slide-out {
+    animation: fadeSlideOut 0.4s forwards;
+}
+
+@keyframes fadeSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
 .rainbow-btn {
     background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
     background-size: 800% 800%;
