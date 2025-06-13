@@ -11,6 +11,7 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject ActivityService ActivityService
 @inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager Navigation
 
 @inherits LayoutComponentBase
 
@@ -79,8 +80,6 @@ else
     private bool isAuthenticated = false;
     private string? successMessage;
 
-    [CascadingParameter] public MainLayout? Layout { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthProvider.GetAuthenticationStateAsync();
@@ -93,6 +92,10 @@ else
         }
     }
 
+    private void RefreshPage() {
+        Navigation.NavigateTo("/saved", false);
+    }
+
     private async Task ShowSuccess(string message)
     {
         successMessage = message;
@@ -102,34 +105,37 @@ else
         StateHasChanged();
     }
 
-private async Task CompleteActivityAsync(Activity activity)
-{
-    var authState = await AuthProvider.GetAuthenticationStateAsync();
-    var user = authState.User;
+    private async Task CompleteActivityAsync(Activity activity)
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity == null || !user.Identity.IsAuthenticated)
+        {
+            return;
+        }
 
-
-        // Complete the activity (you can update user points here as well)
+        // Complete the activity and award points
         await ActivityService.CompleteActivityAsync(user, activity);
 
         // Update UI
         savedActivities?.Remove(activity);
+        RefreshPage();
+        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Title}\" and earned points!");
+    }
 
-        // Show success message
+    private async Task RemoveActivityAsync(Activity activity)
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity == null || !user.Identity.IsAuthenticated)
+        {
+            return;
+        }
 
-}
-
-private async Task RemoveActivityAsync(Activity activity)
-{
-    var authState = await AuthProvider.GetAuthenticationStateAsync();
-    var user = authState.User;
-
-    // Get the current user from UserManager
-    var appUser = await UserManager.GetUserAsync(user);
-
+        // Remove the activity from the user's saved list
         await ActivityService.RemoveActivityAsync(user, activity);
-
         savedActivities?.Remove(activity);
         await ShowSuccess($"🗑️ Removed \"{activity.Title}\" from your saved list.");
-}
+    }
 
 }

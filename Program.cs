@@ -5,6 +5,7 @@ using im_bored.Components;
 using im_bored.Components.Account;
 using im_bored.Data;
 using im_bored.Services;
+using im_bored.Components.Layout;
 
 var builder = WebApplication.CreateBuilder(args);
 
