@@ -46,6 +46,19 @@ public class ActivityService(
         return activities[random.Next(activities.Count)];
     }
 
+    private async Task<ApplicationUser?> GetUserWithActivitiesAsync(ClaimsPrincipal principal)
+    {
+        var user = await _userManager.GetUserAsync(principal);
+        if (user == null) return null;
+
+        _context.Attach(user);
+        await _context.Entry(user)
+            .Collection(u => u.Activities)
+            .LoadAsync();
+
+        return user;
+    }
+
     /*
             * Save activity to the user's saved activities list
             * @param principal The ClaimsPrincipal of the user
@@ -55,12 +68,10 @@ public class ActivityService(
     */
     public async Task SaveActivityAsync(ClaimsPrincipal principal, Activity activity)
     {
-        var user = await _userManager.GetUserAsync(principal);
-        if (user == null || activity == null) return;
+        if (activity == null) return;
 
-        // Attach tracked entities if necessary
-        _context.Attach(user);
-        _context.Attach(activity);
+        var user = await GetUserWithActivitiesAsync(principal);
+        if (user == null) return;
 
         if (!user.Activities.Any(a => a.Id == activity.Id))
         {
@@ -77,13 +88,12 @@ public class ActivityService(
     */
     public async Task RemoveActivityAsync(ClaimsPrincipal principal, Activity activity)
     {
-        var user = await _userManager.GetUserAsync(principal);
-        if (user == null || activity == null) return;
+        if (activity == null) return;
+        var user = await GetUserWithActivitiesAsync(principal);
+        if (user == null) return;
 
         var dbActivity = await _context.Activities.FindAsync(activity.Id);
         if (dbActivity == null) return;
-
-        _context.Attach(user);
 
         if (user.Activities.Any(a => a.Id == dbActivity.Id))
         {
@@ -101,13 +111,12 @@ public class ActivityService(
 
     public async Task CompleteActivityAsync(ClaimsPrincipal principal, Activity activity)
     {
-        var user = await _userManager.GetUserAsync(principal);
+        if (activity == null) return;
+        var user = await GetUserWithActivitiesAsync(principal);
         if (user == null) return;
 
         var dbActivity = await _context.Activities.FindAsync(activity.Id);
         if (dbActivity == null) return;
-
-        _context.Attach(user);
 
         if (user.Activities.Any(a => a.Id == dbActivity.Id))
         {

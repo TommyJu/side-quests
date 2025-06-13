@@ -10,7 +10,7 @@ namespace im_bored.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
-    public DbSet<Activity> Activities => Set<Activity>();
+    public DbSet<Activity> Activities { get; set; }
     
     /*
         * This method is used to seed the database with initial data from a CSV file.
