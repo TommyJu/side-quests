@@ -99,7 +99,7 @@ else
 
     private async Task CompleteActivityAsync(Activity activity)
     {
-        if (user.Identity == null || !user.Identity.IsAuthenticated)
+        if (user!.Identity == null || !user.Identity.IsAuthenticated)
         {
             return;
         }
@@ -117,7 +117,7 @@ else
     {
         var authState = await AuthProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        if (user.Identity == null || !user.Identity.IsAuthenticated)
+        if (user!.Identity == null || !user.Identity.IsAuthenticated)
         {
             return;
         }

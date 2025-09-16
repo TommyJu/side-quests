@@ -136,7 +136,7 @@
     {
         if (activity == null) return;
 
-        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
+        if (currentUser!.Identity != null && currentUser!.Identity.IsAuthenticated)
         {
             await ActivityService.SaveActivityAsync(currentUser, activity);
             activitySaved = true;
