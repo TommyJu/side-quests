@@ -1,8 +1,6 @@
-using System;
 using System.Security.Claims;
 using im_bored.Data;
 using im_bored.Models;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

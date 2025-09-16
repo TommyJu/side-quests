@@ -6,6 +6,9 @@ using im_bored.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +54,17 @@ builder
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 builder.Services.AddScoped<ActivityService>();
+// Semantic Kernel
+var model = builder.Configuration["OpenAI:Model"];
+var apiKey = builder.Configuration["OpenAI:ApiKey"];
+var kernelBuilder = Kernel.CreateBuilder();
+kernelBuilder.AddOpenAIChatCompletion(model, apiKey);
+var kernel = kernelBuilder.Build();
+// Register the kernel as a singleton for DI
+builder.Services.AddSingleton(kernel);
+builder.Services.AddLogging(services => services.AddConsole().SetMinimumLevel(LogLevel.Trace));
+
+builder.Services.AddSingleton<QuestGeneratorService>();
 
 var app = builder.Build();
 
