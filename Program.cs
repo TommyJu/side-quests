@@ -25,6 +25,13 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";           // Redirect unauthenticated users here
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Optional
+    options.ExpireTimeSpan = TimeSpan.FromDays(14); // Optional
+});
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));

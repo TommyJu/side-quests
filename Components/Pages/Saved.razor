@@ -1,4 +1,5 @@
 ﻿@page "/saved"
+@attribute [Authorize]
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Identity
 @using im_bored.Components.Layout
@@ -15,19 +16,14 @@
 
 @inherits LayoutComponentBase
 
-<PageTitle>Saved Activities</PageTitle>
+<PageTitle>Quest Log</PageTitle>
 
-<h2 class="text-center mt-4">📚 Your Saved Activities</h2>
+<h2 class="text-center mt-4">📚 Quests In-Progress</h2>
 @if (!string.IsNullOrEmpty(successMessage))
 {
     <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
 }
-@if (!isAuthenticated)
-{
-    <div class="alert alert-warning mt-3 text-center">
-        You must be logged in to view saved activities.
-    </div>
-}
+
 else if (savedActivities == null)
 {
     <div class="text-center mt-4">
@@ -36,7 +32,7 @@ else if (savedActivities == null)
 }
 else if (!savedActivities.Any())
 {
-    <div class="alert alert-info mt-3 text-center">You haven’t saved any activities yet!</div>
+    <div class="alert alert-info mt-3 text-center">You have not accepted any quests yet.</div>
 }
 else
 {
@@ -77,19 +73,15 @@ else
 
 @code {
     private List<Activity>? savedActivities;
-    private bool isAuthenticated = false;
     private string? successMessage;
+    private ClaimsPrincipal? user;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        user = authState.User;
 
-        if (isAuthenticated)
-        {
-            savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
-        }
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
     }
 
     private void RefreshPage() {
@@ -107,8 +99,6 @@ else
 
     private async Task CompleteActivityAsync(Activity activity)
     {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
         if (user.Identity == null || !user.Identity.IsAuthenticated)
         {
             return;
@@ -135,7 +125,7 @@ else
         // Remove the activity from the user's saved list
         await ActivityService.RemoveActivityAsync(user, activity);
         savedActivities?.Remove(activity);
-        await ShowSuccess($"🗑️ Removed \"{activity.Title}\" from your saved list.");
+        await ShowSuccess($"🗑️ Removed \"{activity.Title}\" from your saved quests.");
     }
 
 }

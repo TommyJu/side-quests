@@ -1,4 +1,5 @@
 ﻿@page "/"
+@attribute [Authorize]
 @using System.Security.Claims
 @using im_bored.Models
 @using im_bored.Services
@@ -67,8 +68,7 @@
             <p><strong>Price:</strong> @activity.Price</p>
             <p><strong>Duration:</strong> @activity.ActivityDuration</p>
             <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
-@if (isAuthenticated)
-{
+
     <div class="d-flex justify-content-end mt-3">
         @if (activitySaved)
         {
@@ -79,7 +79,7 @@
             <button class="btn btn-dark" @onclick="SaveActivity">❤️ Save Activity</button>
         }
     </div>
-}
+
         </div>
     }
     else if (hasSearched)
@@ -90,13 +90,11 @@
 
 @code {
     private ClaimsPrincipal? currentUser;
-    private bool isAuthenticated = false;
     private AuthenticationState? authState;
     protected override async Task OnInitializedAsync()
     {
         authState = await AuthProvider.GetAuthenticationStateAsync();
         currentUser = authState.User;
-        isAuthenticated = currentUser.Identity?.IsAuthenticated ?? false;
     }
     private Activity? activity;
     // Activity title color
@@ -137,13 +135,10 @@
     private async Task SaveActivity()
     {
         if (activity == null) return;
-        
-        var user = authState?.User;
-        if (user == null) return;
 
-        if (user.Identity != null && user.Identity.IsAuthenticated)
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
-            await ActivityService.SaveActivityAsync(user, activity);
+            await ActivityService.SaveActivityAsync(currentUser, activity);
             activitySaved = true;
         }
     }
