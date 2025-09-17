@@ -44,14 +44,18 @@ public class ActivityService(
         return activities[random.Next(activities.Count)];
     }
 
+    // Helper: Get user including SavedActivities
     private async Task<ApplicationUser?> GetUserWithActivitiesAsync(ClaimsPrincipal principal)
     {
         var user = await _userManager.GetUserAsync(principal);
         if (user == null) return null;
 
         _context.Attach(user);
+
+        // NOTE: only scalar values for each entry in UserSavedActivites are loaded for improved performance
+        // Activity and User entities may be null
         await _context.Entry(user)
-            .Collection(u => u.Activities)
+            .Collection(u => u.SavedActivities)
             .LoadAsync();
 
         return user;
@@ -64,16 +68,28 @@ public class ActivityService(
             * @return Task representing the asynchronous operation
 
     */
-    public async Task SaveActivityAsync(ClaimsPrincipal principal, Activity activity)
+    public async Task SaveActivityAsync(
+        ClaimsPrincipal principal,
+        Activity activity,
+        string description)
     {
         if (activity == null) return;
 
         var user = await GetUserWithActivitiesAsync(principal);
         if (user == null) return;
 
-        if (!user.Activities.Any(a => a.Id == activity.Id))
+        if (!user.SavedActivities.Any(a => a.ActivityId == activity.Id))
+        // Add the Activity as an entry into the UserSavedActivites join table.
         {
-            user.Activities.Add(activity);
+            UserSavedActivity savedActivity = new UserSavedActivity
+            {
+                UserId = user.Id,
+                User = user,
+                ActivityId = activity.Id,
+                Activity = activity,
+                Description = description
+            };
+            user.SavedActivities.Add(savedActivity);
             await _context.SaveChangesAsync();
         }
     }
@@ -90,12 +106,10 @@ public class ActivityService(
         var user = await GetUserWithActivitiesAsync(principal);
         if (user == null) return;
 
-        var dbActivity = await _context.Activities.FindAsync(activity.Id);
-        if (dbActivity == null) return;
-
-        if (user.Activities.Any(a => a.Id == dbActivity.Id))
+        UserSavedActivity? savedActivity = user.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
+        if (savedActivity != null)
         {
-            user.Activities.Remove(dbActivity);
+            user.SavedActivities.Remove(savedActivity);
             await _context.SaveChangesAsync();
         }
     }
@@ -113,12 +127,10 @@ public class ActivityService(
         var user = await GetUserWithActivitiesAsync(principal);
         if (user == null) return;
 
-        var dbActivity = await _context.Activities.FindAsync(activity.Id);
-        if (dbActivity == null) return;
-
-        if (user.Activities.Any(a => a.Id == dbActivity.Id))
+        UserSavedActivity? savedActivity = user.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
+        if (savedActivity != null)
         {
-            user.Activities.Remove(dbActivity);
+            user.SavedActivities.Remove(savedActivity);
             user.Points += POINTS_GAINED_PER_ACTIVITY;
             await _context.SaveChangesAsync();
         }
@@ -134,9 +146,11 @@ public class ActivityService(
         var user = await _userManager.GetUserAsync(principal);
         if (user == null) return [];
 
-        return await _context.Users
-            .Where(u => u.Id == user.Id)
-            .SelectMany(u => u.Activities)
+        // Note: Include is needed to load the Activity entity which is null from GetUserAsync,
+        return await _context.UserSavedActivities
+            .Where(usa => usa.UserId == user.Id)
+            .Include(usa => usa.Activity)
+            .Select(u => u.Activity)
             .ToListAsync();
     }
 

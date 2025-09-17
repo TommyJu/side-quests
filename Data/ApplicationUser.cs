@@ -7,7 +7,8 @@ namespace im_bored.Data;
 public class ApplicationUser : IdentityUser
 {
     public int Points { get; set; } = 0;
+
     // Many to many relationship between ApplicationUser and Activity entities
-    public ICollection<Activity> Activities { get; set; } = [];
+    public ICollection<UserSavedActivity> SavedActivities { get; set; } = [];
 }
 

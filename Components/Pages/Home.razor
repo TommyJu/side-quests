@@ -162,7 +162,7 @@
 
         if (currentUser!.Identity != null && currentUser!.Identity.IsAuthenticated)
         {
-            await ActivityService.SaveActivityAsync(currentUser, activity);
+            await ActivityService.SaveActivityAsync(currentUser, activity, generatedQuestDescription);
             activitySaved = true;
         }
     }

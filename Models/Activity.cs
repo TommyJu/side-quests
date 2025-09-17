@@ -21,9 +21,8 @@ public class Activity
     [Required]
     public required bool kidFriendly { get; set; }
     
-    // Relationship: list of users who have saved this activity
-    // This is a many-to-many relationship, so we need to create a join table
-    public ICollection<ApplicationUser> SavedByUsers { get; set; } = new List<ApplicationUser>();
+    // Many to Many Relationship: list of users who have saved this activity
+    public ICollection<UserSavedActivity> SavedByUsers { get; set; } = new List<UserSavedActivity>();
 }
 
 public enum ActivityType
