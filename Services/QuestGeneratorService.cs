@@ -1,6 +1,7 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using im_bored.Models;
+using System.Text;
 
 namespace im_bored.Services;
 
@@ -17,7 +18,7 @@ public class QuestGeneratorService
 
     }
 
-    public async Task GenerateQuestDescriptionAsync(Activity activity)
+    public async Task<string> GenerateQuestDescriptionAsync(Activity activity)
     {
         // Retrieve the chat completion service
         var chatService = _kernel.Services.GetRequiredService<IChatCompletionService>();
@@ -27,7 +28,9 @@ public class QuestGeneratorService
         Your objective is to create a concise, clear, and fun activity
         description to expand on the given activity to give the user
         an idea of how to follow through with completing activity.
+        
         Ensure that your reply is appropriate.
+        
         Give a reply specific to this activity only, ignore previous activies.
 
         Activity details:
@@ -44,14 +47,18 @@ public class QuestGeneratorService
         _history.AddUserMessage(prompt);
 
         // Call the AI model
-        var result = await chatService.GetChatMessageContentsAsync(chatHistory:_history, kernel: _kernel);
+        var response = await chatService.GetChatMessageContentsAsync(chatHistory: _history, kernel: _kernel);
 
-        // Write the reply to console
+        // Parse the response into a string
+        var combinedText = new StringBuilder();
         Console.WriteLine("Assistant > ");
-        foreach (var chunk in result)
+        foreach (var chunk in response)
         {
             Console.Write(chunk.Content);
+            combinedText.AppendLine(chunk.Content);
         }
+
+        return combinedText.ToString();
     }
 
 } // end of class

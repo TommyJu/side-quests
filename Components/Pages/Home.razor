@@ -94,10 +94,9 @@
 
     @if (!string.IsNullOrEmpty(generatedQuestDescription))
     {
-        <div class="mt-3 alert alert-success">
+        <div class="mt-3 alert alert-success w-75" style="white-space: pre-wrap;">
             <h5>Quest Description</h5>
-            <p>@generatedQuestDescription</p>
-            @* <button class="btn btn-outline-primary" @onclick="SaveQuest">Save Quest</button> *@
+            @generatedQuestDescription
         </div>
     }
 
@@ -108,23 +107,18 @@
 
 @code {
     // Semantic Kernel
-    [Parameter] public string activityTitle { get; set; } = "Default Activity";
     private string generatedQuestDescription = "";
 
     // Authentication and current user
     private ClaimsPrincipal? currentUser;
     private AuthenticationState? authState;
-    protected override async Task OnInitializedAsync()
-    {
-        authState = await AuthProvider.GetAuthenticationStateAsync();
-        currentUser = authState.User;
-    }
     private Activity? activity;
+    
     // Activity title color
     private string randomColor = "black";
-    // This is used to show a message when no activity is found after a search
+    
+    // UI State
     private bool hasSearched = false;
-    // This is used to show a message when an activity is successfully saved
     private bool activitySaved = false;
 
     // Filters
@@ -133,6 +127,13 @@
     private ActivityPrice? selectedPrice = null;
     private ActivityDuration? selectedDuration = null;
     private bool onlyKidFriendly = false;
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await AuthProvider.GetAuthenticationStateAsync();
+        currentUser = authState.User;
+    }
 
     private async Task LoadFilteredActivity()
     {
@@ -174,6 +175,6 @@
         if (activity == null) {
             return;
         }
-        await QuestService.GenerateQuestDescriptionAsync(activity);
+        generatedQuestDescription = await QuestService.GenerateQuestDescriptionAsync(activity);
     }
 }

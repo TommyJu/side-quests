@@ -10,7 +10,7 @@ public class ActivityService(
     ApplicationDbContext _context,
     UserManager<ApplicationUser> _userManager)
 {
-    public const int POINTS_GAINED_PER_ACTIVITY = 5;
+    public const int POINTS_GAINED_PER_ACTIVITY = 100;
     // Select random activity from the database
     public async Task<Activity> GetRandomActivity()
     {
