@@ -14,9 +14,11 @@ public class Activity
     public required ActivityType Type { get; set; }
     [Required]
     public required ActivityParticipants Participants { get; set; }
+    [Required]
     public required ActivityPrice Price { get; set; }
     [Required]
     public required ActivityDuration ActivityDuration { get; set; }
+    [Required]
     public required bool kidFriendly { get; set; }
     
     // Relationship: list of users who have saved this activity

@@ -89,17 +89,14 @@
     }
 
     @* Semantic Kernel *@
-    <div class="mb-3">
-        <label>Your Input / Goal</label>
-        <InputText @bind-Value="userInput" class="form-control" />
-    </div>
+
     <button class="btn btn-primary" @onclick="GenerateQuestDescription">Generate Quest Description</button>
 
-    @if (!string.IsNullOrEmpty(generatedQuest))
+    @if (!string.IsNullOrEmpty(generatedQuestDescription))
     {
         <div class="mt-3 alert alert-success">
             <h5>Quest Description</h5>
-            <p>@generatedQuest</p>
+            <p>@generatedQuestDescription</p>
             @* <button class="btn btn-outline-primary" @onclick="SaveQuest">Save Quest</button> *@
         </div>
     }
@@ -112,8 +109,7 @@
 @code {
     // Semantic Kernel
     [Parameter] public string activityTitle { get; set; } = "Default Activity";
-    private string userInput = "";
-    private string generatedQuest = "";
+    private string generatedQuestDescription = "";
 
     // Authentication and current user
     private ClaimsPrincipal? currentUser;
@@ -171,11 +167,13 @@
     }
 
     // AI generated description
+    // TODO: Return output to UI instead of console
+    // TODO: Save description to UserSavedActivities
     private async Task GenerateQuestDescription()
     {
         if (activity == null) {
             return;
         }
-        await QuestService.GenerateQuestAsync(activity.Title, userInput);
+        await QuestService.GenerateQuestDescriptionAsync(activity);
     }
 }
