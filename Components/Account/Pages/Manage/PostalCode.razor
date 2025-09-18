@@ -1,0 +1,80 @@
+﻿@page "/Account/Manage/PostalCode"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using im_bored.Data
+@inject UserManager<ApplicationUser> UserManager
+@inject AuthenticationStateProvider AuthProvider
+
+<PageTitle>Manage postal code</PageTitle>
+
+<h3>Manage postal code</h3>
+
+
+<StatusMessage Message="@message"/>
+<div class="row">
+    <div class="col-xl-6">
+        <EditForm Model="Input" FormName="change-postal-code" OnValidSubmit="OnChangePostalCodeAsync" method="post">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert" />
+
+            @* Old postal code display *@
+            <div class="form-floating mb-3">
+                <input type="text" value="@oldPostalCode" id="old-postal-code" class="form-control" disabled>
+                <label for="Input.NewEmail" class="form-label">Current postal code</label>
+            </div>
+
+            @* New postal code input *@
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.NewPostalCode" id="Input.NewPostalCode" class="form-control" maxlength="10" aria-required="true" placeholder="Enter a new postal code" />
+                <label for="Input.NewEmail" class="form-label">New postal code</label>
+                <ValidationMessage For="() => Input.NewPostalCode" class="text-danger" />
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Change postal code</button>
+        </EditForm>
+    </div>
+</div>
+
+
+
+@code {
+    private string? oldPostalCode;
+    private string? message;
+    private ApplicationUser? user = default!;
+
+    // Postal code form
+    [SupplyParameterFromForm(FormName = "change-postal-code")]
+    private InputModel Input { get; set; } = new();
+
+    // On initialization, retrieve the current ApplicationUser
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var claimsPrincipal = authState.User;
+        user = await UserManager.GetUserAsync(claimsPrincipal);
+        
+        if (user != null) {
+            oldPostalCode = user.PostalCode;
+        }
+    }
+
+
+    private async Task OnChangePostalCodeAsync()
+    {
+        if (user == null || Input.NewPostalCode == null) return;
+
+        // Update the UI
+        oldPostalCode = Input.NewPostalCode;
+
+        // Update the user's postal code
+        user.PostalCode = Input.NewPostalCode;
+        await UserManager.UpdateAsync(user);
+    }
+
+    private sealed class InputModel
+    {
+        [Display(Name = "New postal code")]
+        [StringLength(10, ErrorMessage = "Postal code cannot be longer than 10 characters.")]
+        public string? NewPostalCode { get; set; }
+    }
+}
