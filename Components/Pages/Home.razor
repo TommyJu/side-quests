@@ -172,9 +172,9 @@
     // TODO: Save description to UserSavedActivities
     private async Task GenerateQuestDescription()
     {
-        if (activity == null) {
+        if (activity == null || !currentUser!.Identity!.IsAuthenticated) {
             return;
         }
-        generatedQuestDescription = await QuestService.GenerateQuestDescriptionAsync(activity);
+        generatedQuestDescription = await QuestService.GenerateQuestDescriptionAsync(activity, currentUser);
     }
 }

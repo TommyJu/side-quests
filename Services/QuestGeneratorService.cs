@@ -2,6 +2,9 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using im_bored.Models;
 using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using im_bored.Data;
 
 namespace im_bored.Services;
 
@@ -9,17 +12,25 @@ public class QuestGeneratorService
 {
     private readonly Kernel _kernel;
     private ChatHistory _history;
+    private UserManager<ApplicationUser> _userManager;
 
     // Uses DI to obtain Kernel singleton
-    public QuestGeneratorService(Kernel kernel)
+    public QuestGeneratorService(
+        Kernel kernel,
+        UserManager<ApplicationUser> userManager)
     {
         _kernel = kernel;
         _history = new ChatHistory();
+        _userManager = userManager;
 
     }
 
-    public async Task<string> GenerateQuestDescriptionAsync(Activity activity)
+    public async Task<string> GenerateQuestDescriptionAsync(Activity activity, ClaimsPrincipal principal)
     {
+        // Retrieve the ApplicationUser given the Claims Principal
+        var user = await _userManager.GetUserAsync(principal);
+        if (user == null) return "";
+
         // Retrieve the chat completion service
         var chatService = _kernel.Services.GetRequiredService<IChatCompletionService>();
 
@@ -42,7 +53,7 @@ public class QuestGeneratorService
         - Kid Friendly? = {activity.kidFriendly}
 
         User details:
-        - Postal code = v5p 4b9
+        - Postal code = {user.PostalCode}
 ";
         _history.AddUserMessage(prompt);
 

@@ -64,7 +64,7 @@ var kernel = kernelBuilder.Build();
 builder.Services.AddSingleton(kernel);
 builder.Services.AddLogging(services => services.AddConsole().SetMinimumLevel(LogLevel.Trace));
 
-builder.Services.AddSingleton<QuestGeneratorService>();
+builder.Services.AddScoped<QuestGeneratorService>();
 
 var app = builder.Build();
 
