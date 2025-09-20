@@ -17,6 +17,7 @@ public class UserSavedActivity
     [Required]
     public required Activity Activity { get; set; } = null!;
 
-    // Additional column
+    // Additional columns
     public string Description { get; set; } = string.Empty;
+    public bool IsComplete { get; set; } = false;
 }
