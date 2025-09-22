@@ -130,18 +130,18 @@ public class ActivityService(
         UserSavedActivity? savedActivity = user.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
         if (savedActivity != null)
         {
-            user.SavedActivities.Remove(savedActivity);
+            savedActivity.IsComplete = true;
             user.Points += POINTS_GAINED_PER_ACTIVITY;
             await _context.SaveChangesAsync();
         }
     }
 
     /*
-            * Get the list of saved activities for the user
+            * Get the list of UserSavedActivity for a select claims principal
             * @param principal The ClaimsPrincipal of the user
             * @return List of saved activities
     */
-    public async Task<List<Activity>> GetSavedActivitiesAsync(ClaimsPrincipal principal)
+    public async Task<List<UserSavedActivity>> GetSavedActivitiesAsync(ClaimsPrincipal principal)
     {
         var user = await _userManager.GetUserAsync(principal);
         if (user == null) return [];
@@ -150,7 +150,6 @@ public class ActivityService(
         return await _context.UserSavedActivities
             .Where(usa => usa.UserId == user.Id)
             .Include(usa => usa.Activity)
-            .Select(u => u.Activity)
             .ToListAsync();
     }
 

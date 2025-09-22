@@ -18,49 +18,53 @@
 
 <PageTitle>Quest Log</PageTitle>
 
-<h2 class="text-center mt-4">📚 Quests In-Progress</h2>
+@* Quests in-progress section *@
+<h2 class="text-center mt-4">📖 Quests In-Progress</h2>
 @if (!string.IsNullOrEmpty(successMessage))
 {
     <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
 }
-
 else if (savedActivities == null)
 {
     <div class="text-center mt-4">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
 }
-else if (!savedActivities.Any())
+else if (!savedActivities.Any(a => !a.IsComplete))
 {
     <div class="alert alert-info mt-3 text-center">You have not accepted any quests yet.</div>
 }
 else
 {
     <div class="accordion mt-4 w-100" id="savedActivitiesAccordion" style="max-width: 800px; margin: auto;">
-        @for (int i = 0; i < savedActivities.Count; i++)
+        @foreach (var userSavedActivity in savedActivities.Where(a => !a.IsComplete))
         {
-            var a = savedActivities[i];
             <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-@i">
+                <h2 class="accordion-header" id="heading-@userSavedActivity.Activity.Id">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapse-@i" aria-expanded="false" aria-controls="collapse-@i">
-                        @a.Title
+                            data-bs-target="#collapse-@userSavedActivity.Activity.Id" aria-expanded="false"
+                            aria-controls="collapse-@userSavedActivity.Activity.Id">
+                        @userSavedActivity.Activity.Title
                     </button>
                 </h2>
-                <div id="collapse-@i" class="accordion-collapse collapse" aria-labelledby="heading-@i"
-                    data-bs-parent="#savedActivitiesAccordion">
+                <div id="collapse-@userSavedActivity.Activity.Id" class="accordion-collapse collapse"
+                     aria-labelledby="heading-@userSavedActivity.Activity.Id"
+                     data-bs-parent="#savedActivitiesAccordion">
                     <div class="accordion-body bg-white shadow-sm rounded">
-                        <p><strong>Type:</strong> @a.Type</p>
-                        <p><strong>Participants:</strong> @a.Participants</p>
-                        <p><strong>Price:</strong> @a.Price</p>
-                        <p><strong>Duration:</strong> @a.ActivityDuration</p>
-                        <p><strong>Kid Friendly:</strong> @(a.kidFriendly ? "Yes" : "No")</p>
+                        <p><strong>Type:</strong> @userSavedActivity.Activity.Type</p>
+                        <p><strong>Participants:</strong> @userSavedActivity.Activity.Participants</p>
+                        <p><strong>Price:</strong> @userSavedActivity.Activity.Price</p>
+                        <p><strong>Duration:</strong> @userSavedActivity.Activity.ActivityDuration</p>
+                        <p><strong>Kid Friendly:</strong> @(userSavedActivity.Activity.kidFriendly ? "Yes" : "No")</p>
+                        <p><strong>Description:</strong> @userSavedActivity.Description</p>
                         <div class="d-flex gap-2 mt-3">
-                            <button class="btn btn-success" @onclick="() => CompleteActivityAsync(a)">
+                            <button class="btn btn-success"
+                                    @onclick="() => CompleteActivityAsync(userSavedActivity)">
                                 ✅ Complete
                             </button>
 
-                            <button class="btn btn-danger" @onclick="() => RemoveActivityAsync(a)">
+                            <button class="btn btn-danger"
+                                    @onclick="() => RemoveActivityAsync(userSavedActivity)">
                                 ❌ Remove
                             </button>
                         </div>
@@ -71,8 +75,49 @@ else
     </div>
 }
 
+@* Quests completed section *@
+<h2 class="text-center mt-4">📚 Quests Completed</h2>
+
+@if (savedActivities == null)
+{
+    <div class="text-center mt-4">
+        <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+}
+else if (!savedActivities.Any(a => a.IsComplete))
+{
+    <div class="alert alert-info mt-3 text-center">No quests completed yet.</div>
+}
+else
+{
+    <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
+        @foreach (var completed in savedActivities.Where(a => a.IsComplete))
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="completed-heading-@completed.Activity.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#completed-collapse-@completed.Activity.Id" aria-expanded="false"
+                            aria-controls="completed-collapse-@completed.Activity.Id">
+                        ✅ @completed.Activity.Title
+                    </button>
+                </h2>
+                <div id="completed-collapse-@completed.Activity.Id" class="accordion-collapse collapse"
+                     aria-labelledby="completed-heading-@completed.Activity.Id"
+                     data-bs-parent="#completedActivitiesAccordion">
+                    <div class="accordion-body bg-light shadow-sm rounded">
+                        <p><strong>Title:</strong> @completed.Activity.Title</p>
+                        <p><strong>Type:</strong> @completed.Activity.Type</p>
+                        <p><strong>Participants:</strong> @completed.Activity.Participants</p>
+                        <p><strong>Description:</strong> @completed.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
 @code {
-    private List<Activity>? savedActivities;
+    private List<UserSavedActivity>? savedActivities;
     private string? successMessage;
     private ClaimsPrincipal? user;
 
@@ -84,10 +129,6 @@ else
         savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
     }
 
-    private void RefreshPage() {
-        Navigation.NavigateTo("/saved", false);
-    }
-
     private async Task ShowSuccess(string message)
     {
         successMessage = message;
@@ -97,35 +138,29 @@ else
         StateHasChanged();
     }
 
-    private async Task CompleteActivityAsync(Activity activity)
+    private async Task CompleteActivityAsync(UserSavedActivity activity)
     {
-        if (user!.Identity == null || !user.Identity.IsAuthenticated)
-        {
-            return;
-        }
+        if (user?.Identity == null || !user.Identity.IsAuthenticated) return;
 
-        // Complete the activity and award points
-        await ActivityService.CompleteActivityAsync(user, activity);
+        await ActivityService.CompleteActivityAsync(user, activity.Activity);
 
-        // Update UI
-        savedActivities?.Remove(activity);
-        RefreshPage();
-        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Title}\" and earned points!");
+        // Update local state
+        activity.IsComplete = true;
+
+        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Activity.Title}\"!");
+        StateHasChanged();
     }
 
-    private async Task RemoveActivityAsync(Activity activity)
+    private async Task RemoveActivityAsync(UserSavedActivity activity)
     {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        if (user!.Identity == null || !user.Identity.IsAuthenticated)
-        {
-            return;
-        }
+        if (user?.Identity == null || !user.Identity.IsAuthenticated) return;
 
-        // Remove the activity from the user's saved list
-        await ActivityService.RemoveActivityAsync(user, activity);
+        await ActivityService.RemoveActivityAsync(user, activity.Activity);
+
+        // Remove from local state
         savedActivities?.Remove(activity);
-        await ShowSuccess($"🗑️ Removed \"{activity.Title}\" from your saved quests.");
-    }
 
+        await ShowSuccess($"🗑️ Removed \"{activity.Activity.Title}\" from your saved quests.");
+        StateHasChanged();
+    }
 }
