@@ -6,8 +6,8 @@ window.Activity3D = {
     cameraTarget: new THREE.Vector3(),
     orbitAngle: 0,
     basePosition: new THREE.Vector3(0, 0, 0),
-    clusterRadius: 0.7, // initial cluster radius
-    growthFactor: 0.1, // how much the cluster expands per new sphere
+    clusterRadius: 4, // initial cluster radius
+    growthFactor: 0.1, // how much the cluster expands per new cube
 
     loadThreeJS: function () {
         if (!window.THREE) {
@@ -86,7 +86,7 @@ addActivity: function (size = 1) {
         // Orbit camera around center cluster
         if (this.camera && this.activities.length > 0) {
             this.orbitAngle += 0.002;
-            const radius = 0.5 + this.clusterRadius * 1.3; // zoom out as cluster grows
+            const radius = 1.5 + this.clusterRadius * 1.3; // zoom out as cluster grows
             this.camera.position.x = Math.cos(this.orbitAngle) * radius;
             this.camera.position.z = Math.sin(this.orbitAngle) * radius;
             this.camera.position.y = radius / 2;

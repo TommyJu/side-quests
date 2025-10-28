@@ -115,26 +115,47 @@ else
 
 @* Rendering activity graphic *@
 <div id="activityContainer" style="width:800px; height:600px; border: 2px solid black;"></div>
-<p>XP: @userXP</p>
-<p>Completed Quests: @completedQuestsCount</p>
+<p>Points: @userPoints</p>
 
 @code {
     private List<UserSavedActivity>? savedActivities;
     private string? successMessage;
     private ClaimsPrincipal? user;
-    private int userXP = 200;
-    private int completedQuestsCount => savedActivities?.Count(a => a.IsComplete) ?? 0;
+    private int userPoints;
 
     protected override async Task OnInitializedAsync()
     {
+        //
         var authState = await AuthProvider.GetAuthenticationStateAsync();
         user = authState.User;
-
         savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
+        userPoints = await ActivityService.GetUserPointsAsync(user);
+    }
+
+    // Add activities to 3D Animation based on userPoints
+    private async Task AddUserActivities()
+    {
+        for (int i = 0; i < userPoints; i++)
+        {
+            // Add cube to the 3D scene
+            await JS.InvokeVoidAsync("Activity3D.addActivity");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load Three.js and Activity3D dynamically
+            await JS.InvokeVoidAsync("Activity3D.loadThreeJS");
+            await JS.InvokeVoidAsync("Activity3D.init", "activityContainer");
+
+            // Add cubes based on userPoints
+            await AddUserActivities();
+        }
     }
 
     @* Activity logic *@
-
     private async Task ShowSuccess(string message)
     {
         successMessage = message;
@@ -169,27 +190,4 @@ else
         await ShowSuccess($"🗑️ Removed \"{activity.Activity.Title}\" from your saved quests.");
         StateHasChanged();
     }
-
- protected override async Task OnAfterRenderAsync(bool firstRender)
-{
-    if (firstRender)
-    {
-        // Load Three.js and Activity3D dynamically
-        await JS.InvokeVoidAsync("Activity3D.loadThreeJS");
-        await JS.InvokeVoidAsync("Activity3D.init", "activityContainer");
-
-        // Add spheres based on userXP
-        await AddUserActivities();
-    }
-}
-
-private async Task AddUserActivities()
-{
-    int activityCount = (int)(userXP / 10); // 1 activity per 10 XP
-    for (int i = 0; i < activityCount; i++)
-    {
-        // Add sphere with random position and growth animation
-        await JS.InvokeVoidAsync("Activity3D.addActivity", 0.5, 15);
-    }
-}
 }

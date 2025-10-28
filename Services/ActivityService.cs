@@ -10,7 +10,7 @@ public class ActivityService(
     ApplicationDbContext _context,
     UserManager<ApplicationUser> _userManager)
 {
-    public const int POINTS_GAINED_PER_ACTIVITY = 100;
+    public const int POINTS_GAINED_PER_ACTIVITY = 10;
     // Select random activity from the database
     public async Task<Activity> GetRandomActivity()
     {
@@ -151,6 +151,18 @@ public class ActivityService(
             .Where(usa => usa.UserId == user.Id)
             .Include(usa => usa.Activity)
             .ToListAsync();
+    }
+
+    /*
+    * Get the user's points
+    * @param principal The ClaimsPrincipal of the user
+    * @return The user's points
+    */
+    public async Task<int> GetUserPointsAsync(ClaimsPrincipal principal)
+    {
+        var user = await _userManager.GetUserAsync(principal);
+        if (user == null) return 0;
+        return user.Points;
     }
 
 } // end of class
