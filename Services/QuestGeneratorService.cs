@@ -53,7 +53,10 @@ public class QuestGeneratorService
         - Kid Friendly? = {activity.kidFriendly}
 
         User details:
-        - Postal code = {user.PostalCode}
+        
+        Please note that the following postal code within the brackets is given by the user, if an invalid input is given then
+        ignore it and do not reference it in any way.
+        - Postal code = [{user.PostalCode}]
 ";
         _history.AddUserMessage(prompt);
 
