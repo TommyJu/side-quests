@@ -1,0 +1,102 @@
+﻿@page "/completed"
+@attribute [Authorize]
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using im_bored.Components.Layout
+@using im_bored.Data
+@using im_bored.Models
+@using im_bored.Services
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthProvider
+@inject ActivityService ActivityService
+@inject UserManager<ApplicationUser> UserManager
+@inject IJSRuntime JS
+
+@inherits LayoutComponentBase
+
+<PageTitle>Completed Quests</PageTitle>
+
+@* Quests completed section *@
+<h2 class="text-center mt-4">📚 Quests Completed</h2>
+
+@if (savedActivities == null)
+{
+    <div class="text-center mt-4">
+        <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+}
+else if (!savedActivities.Any(a => a.IsComplete))
+{
+    <div class="alert alert-info mt-3 text-center">No quests completed yet.</div>
+}
+else
+{
+    <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
+        @foreach (var completed in savedActivities.Where(a => a.IsComplete))
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="completed-heading-@completed.Activity.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#completed-collapse-@completed.Activity.Id" aria-expanded="false"
+                        aria-controls="completed-collapse-@completed.Activity.Id">
+                        ✅ @completed.Activity.Title
+                    </button>
+                </h2>
+                <div id="completed-collapse-@completed.Activity.Id" class="accordion-collapse collapse"
+                    aria-labelledby="completed-heading-@completed.Activity.Id" data-bs-parent="#completedActivitiesAccordion">
+                    <div class="accordion-body bg-light shadow-sm rounded">
+                        <p><strong>Title:</strong> @completed.Activity.Title</p>
+                        <p><strong>Type:</strong> @completed.Activity.Type</p>
+                        <p><strong>Participants:</strong> @completed.Activity.Participants</p>
+                        <p><strong>Description:</strong> @completed.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@* Rendering activity graphic *@
+<div id="activityContainer" style="width:800px; height:600px; border: 2px solid black;"></div>
+<p>Points: @userPoints</p>
+
+
+@code {
+    private List<UserSavedActivity>? savedActivities;
+    private ClaimsPrincipal? user;
+    private int userPoints;
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        user = authState.User;
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
+        userPoints = await ActivityService.GetUserPointsAsync(user);
+    }
+    // Add activities to 3D Animation based on userPoints
+    private async Task AddUserActivities()
+    {
+        for (int i = 0; i < userPoints; i++)
+        {
+            // Add cube to the 3D scene
+            await JS.InvokeVoidAsync("Activity3D.addActivity");
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load Three.js and Activity3D dynamically
+            await JS.InvokeVoidAsync("Activity3D.loadThreeJS");
+            await JS.InvokeVoidAsync("Activity3D.init", "activityContainer");
+
+            // Reset the scene
+            await JS.InvokeVoidAsync("Activity3D.resetScene");
+
+            // Add cubes based on userPoints
+            await AddUserActivities();
+        }
+        
+    }
+}
