@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using im_bored.Data;
 
@@ -7,7 +6,7 @@ namespace im_bored.Models;
 // Represents a join table for the (M:N) relationship between Activity and ApplicationUser entities.
 public class UserSavedActivity
 {
-    // Composite key (User + Activity)
+    // Composite key (UserId + ActivityId)
     [Required]
     public required string UserId { get; set; }
     [Required]

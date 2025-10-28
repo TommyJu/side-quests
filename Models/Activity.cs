@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using im_bored.Data;
 
 namespace im_bored.Models;
 
