@@ -1,3 +1,11 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
 html, body {
     font-family: "Comic Sans MS",'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -36,6 +44,10 @@ a, .btn-link {
     animation: rainbow 6s ease infinite;
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.margin-top-12rem {
+    margin-top: 12rem;
 }
 
 .rainbow-btn:hover {

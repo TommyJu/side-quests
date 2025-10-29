@@ -11,7 +11,7 @@
 
 @inject ActivityService ActivityService
 
-<div class="d-flex flex-column align-items-center justify-content-center mt-2">
+<div class="d-flex flex-column align-items-center">
     <!-- Filters: Horizontal Layout -->
     <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
 
@@ -54,11 +54,13 @@
 
     </div>
 
-
-    <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 rounded-pill mb-4"
-        @onclick="LoadFilteredActivity">
-        ✨ Generate a Quest ✨
-    </button>
+    @if (activity == null)
+    {
+        <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 mt-12 margin-top-12rem"
+            @onclick="LoadFilteredActivity">
+            ✨ Embark on a Quest ✨
+        </button>
+    }
 
     @if (activity != null)
     {
@@ -70,35 +72,49 @@
             <p><strong>Duration:</strong> @activity.ActivityDuration</p>
             <p><strong>Kid Friendly:</strong> @(activity.kidFriendly ? "Yes" : "No")</p>
 
-    <div class="d-flex justify-content-end mt-3">
-        @if (activitySaved)
-        {
-            <div class="alert alert-success mb-0 py-2 px-3">🎉 Quest Accepted!</div>
-        }
-        else
-        {
-            <button class="btn btn-dark" @onclick="SaveActivity">✅ Accept Quest</button>
-        }
-    </div>
+            <div class="d-flex justify-content-end mt-3 gap-3">
+
+                @if (questDescriptionLoading)
+                {
+                    <button class="btn btn-primary" disabled>Thinking... please wait</button>
+                }
+                else
+                {
+
+                    <button class="btn btn-dark" @onclick="LoadFilteredActivity">🎲 Reroll Quest</button>
+                    <button class="btn rainbow-btn text-white" @onclick="GenerateQuestDescription">🔮 Summon Quest
+                        Description</button>
+                }
+
+            </div>
 
         </div>
     }
     else if (hasSearched)
     {
-        <div class="alert alert-warning mt-3">No activities found with these filters 😢</div>
+        <div class="alert alert-warning mt-3">No quests found with these filters 😢</div>
     }
 
-    @* Semantic Kernel *@
-
-    <button class="btn btn-primary" @onclick="GenerateQuestDescription">Generate Quest Description</button>
-
-    @if (!string.IsNullOrEmpty(generatedQuestDescription))
-    {
-        <div class="mt-3 alert alert-success w-75" style="white-space: pre-wrap;">
-            <h5>Quest Description</h5>
-            @generatedQuestDescription
+    <!-- Quest Description Modal -->
+    <div class="modal fade @((showQuestModal ? "show d-block" : ""))" tabindex="-1"
+        style="@((showQuestModal ? "background-color: rgba(0,0,0,0.5);" : ""))"
+        aria-hidden="@(showQuestModal ? "false" : "true")">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quest Description</h5>
+                    <button type="button" class="btn-close" @onclick="DeclineQuest"></button>
+                </div>
+                <div class="modal-body" style="white-space: pre-wrap; max-height: 60vh; overflow-y: auto;">
+                    @generatedQuestDescription
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" @onclick="AcceptQuest">✅ Accept</button>
+                    <button class="btn btn-danger" @onclick="DeclineQuest">❌ Decline</button>
+                </div>
+            </div>
         </div>
-    }
+    </div>
 
 
 </div>
@@ -113,13 +129,14 @@
     private ClaimsPrincipal? currentUser;
     private AuthenticationState? authState;
     private Activity? activity;
-    
+
     // Activity title color
     private string randomColor = "black";
-    
+
     // UI State
     private bool hasSearched = false;
-    private bool activitySaved = false;
+    private bool questDescriptionLoading = false;
+    private bool showQuestModal = false;
 
     // Filters
     private ActivityType? selectedType = null;
@@ -127,8 +144,8 @@
     private ActivityPrice? selectedPrice = null;
     private ActivityDuration? selectedDuration = null;
     private bool onlyKidFriendly = false;
-    
-    
+
+
     protected override async Task OnInitializedAsync()
     {
         authState = await AuthProvider.GetAuthenticationStateAsync();
@@ -146,7 +163,6 @@
         onlyKidFriendly ? true : null
         );
         hasSearched = true;
-        activitySaved = false; // Reset the saved state for new activity
     }
     // Generate a random color (excluding white)
     private string GetRandomColor()
@@ -163,18 +179,43 @@
         if (currentUser!.Identity != null && currentUser!.Identity.IsAuthenticated)
         {
             await ActivityService.SaveActivityAsync(currentUser, activity, generatedQuestDescription);
-            activitySaved = true;
         }
     }
 
     // AI generated description
-    // TODO: Return output to UI instead of console
-    // TODO: Save description to UserSavedActivities
     private async Task GenerateQuestDescription()
     {
-        if (activity == null || !currentUser!.Identity!.IsAuthenticated) {
+        if (activity == null || !currentUser!.Identity!.IsAuthenticated)
+        {
             return;
         }
+        questDescriptionLoading = true;
         generatedQuestDescription = await QuestService.GenerateQuestDescriptionAsync(activity, currentUser);
+        questDescriptionLoading = false;
+
+        // Show modal after description is ready
+        showQuestModal = true;
+    }
+
+    private async void DeclineQuest()
+    {
+        showQuestModal = false;
+        generatedQuestDescription = "";
+        await LoadFilteredActivity();
+
+    }
+
+    private async Task AcceptQuest()
+    {
+        if (activity == null) return;
+
+        if (currentUser!.Identity != null && currentUser!.Identity.IsAuthenticated)
+        {
+            await ActivityService.SaveActivityAsync(currentUser, activity, generatedQuestDescription);
+        }
+        showQuestModal = false;
+        activity = null;
+        generatedQuestDescription = "";
+        hasSearched = false;
     }
 }
