@@ -33,34 +33,43 @@ else if (!savedActivities.Any(a => a.IsComplete))
 }
 else
 {
-    <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
-        @foreach (var completed in savedActivities.Where(a => a.IsComplete))
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="completed-heading-@completed.Activity.Id">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#completed-collapse-@completed.Activity.Id" aria-expanded="false"
-                        aria-controls="completed-collapse-@completed.Activity.Id">
-                        ✅ @completed.Activity.Title
-                    </button>
-                </h2>
-                <div id="completed-collapse-@completed.Activity.Id" class="accordion-collapse collapse"
-                    aria-labelledby="completed-heading-@completed.Activity.Id" data-bs-parent="#completedActivitiesAccordion">
-                    <div class="accordion-body bg-light shadow-sm rounded">
-                        <p><strong>Title:</strong> @completed.Activity.Title</p>
-                        <p><strong>Type:</strong> @completed.Activity.Type</p>
-                        <p><strong>Participants:</strong> @completed.Activity.Participants</p>
-                        <p><strong>Description:</strong> <div style="white-space: pre-wrap;">@completed.Description</div></p>
+    @* Rendering activity graphic *@
+    <div class="d-flex flex-column align-items-center gap-6">
+        <p style="font-size: 24px; margin: 24px; font-style: italic;">Quest Points: @userPoints</p>
+
+        @if (userPoints > 0) {
+            <div id="activityContainer" style="width:800px; height:600px;"></div>
+        }
+        
+        <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
+            @foreach (var completed in savedActivities.Where(a => a.IsComplete))
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="completed-heading-@completed.Activity.Id">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#completed-collapse-@completed.Activity.Id" aria-expanded="false"
+                            aria-controls="completed-collapse-@completed.Activity.Id">
+                            ✅ @completed.Activity.Title
+                        </button>
+                    </h2>
+                    <div id="completed-collapse-@completed.Activity.Id" class="accordion-collapse collapse"
+                        aria-labelledby="completed-heading-@completed.Activity.Id"
+                        data-bs-parent="#completedActivitiesAccordion">
+                        <div class="accordion-body bg-light shadow-sm rounded">
+                            <p><strong>Title:</strong> @completed.Activity.Title</p>
+                            <p><strong>Type:</strong> @completed.Activity.Type</p>
+                            <p><strong>Participants:</strong> @completed.Activity.Participants</p>
+                            <p><strong>Description:</strong>
+                            <div style="white-space: pre-wrap;">@completed.Description</div>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
 
-@* Rendering activity graphic *@
-<div id="activityContainer" style="width:800px; height:600px; border: 2px solid black;"></div>
-<p>Points: @userPoints</p>
 
 
 @code {
@@ -97,6 +106,6 @@ else
             // Add cubes based on userPoints
             await AddUserActivities();
         }
-        
+
     }
 }
