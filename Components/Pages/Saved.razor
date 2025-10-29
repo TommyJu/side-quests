@@ -18,7 +18,7 @@
 <PageTitle>Quest Log</PageTitle>
 
 @* Quests in-progress section *@
-<h2 class="text-center mt-4">📖 Quests In-Progress</h2>
+<h2 class="text-center mt-4">📖 Quest Log</h2>
 @if (!string.IsNullOrEmpty(successMessage))
 {
     <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
@@ -54,7 +54,7 @@ else
                         <p><strong>Price:</strong> @userSavedActivity.Activity.Price</p>
                         <p><strong>Duration:</strong> @userSavedActivity.Activity.ActivityDuration</p>
                         <p><strong>Kid Friendly:</strong> @(userSavedActivity.Activity.kidFriendly ? "Yes" : "No")</p>
-                        <p><strong>Description:</strong> @userSavedActivity.Description</p>
+                        <p><strong>Description:</strong> <div style="white-space: pre-wrap;">@userSavedActivity.Description</div></p>
                         <div class="d-flex gap-2 mt-3">
                             <button class="btn btn-success" @onclick="() => CompleteActivityAsync(userSavedActivity)">
                                 ✅ Complete
@@ -89,7 +89,7 @@ else
     {
         successMessage = message;
         StateHasChanged();
-        await Task.Delay(3000);
+        await Task.Delay(5000);
         successMessage = null;
         StateHasChanged();
     }
@@ -103,7 +103,7 @@ else
         // Update local state
         activity.IsComplete = true;
 
-        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Activity.Title}\"!");
+        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Activity.Title}\" and have received {ActivityService.POINTS_GAINED_PER_ACTIVITY} quest points!");
         StateHasChanged();
     }
 

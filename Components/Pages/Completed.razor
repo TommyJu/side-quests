@@ -19,7 +19,7 @@
 <PageTitle>Completed Quests</PageTitle>
 
 @* Quests completed section *@
-<h2 class="text-center mt-4">📚 Quests Completed</h2>
+<h2 class="text-center mt-4">📚 Completed Quests</h2>
 
 @if (savedActivities == null)
 {
@@ -50,7 +50,7 @@ else
                         <p><strong>Title:</strong> @completed.Activity.Title</p>
                         <p><strong>Type:</strong> @completed.Activity.Type</p>
                         <p><strong>Participants:</strong> @completed.Activity.Participants</p>
-                        <p><strong>Description:</strong> @completed.Description</p>
+                        <p><strong>Description:</strong> <div style="white-space: pre-wrap;">@completed.Description</div></p>
                     </div>
                 </div>
             </div>

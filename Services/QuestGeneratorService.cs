@@ -40,10 +40,6 @@ public class QuestGeneratorService
         description to expand on the given activity to give the user
         an idea of how to follow through with completing activity.
         
-        Ensure that your reply is appropriate.
-        
-        Give a reply specific to this activity only, ignore previous activies.
-
         Activity details:
         - Title = {activity.Title}
         - Type = {activity.Type}
@@ -53,10 +49,7 @@ public class QuestGeneratorService
         - Kid Friendly? = {activity.kidFriendly}
 
         User details:
-        
-        Please note that the following postal code within the brackets is given by the user, if an invalid input is given then
-        ignore it and do not reference it in any way.
-        - Postal code = [{user.PostalCode}]
+        - Postal code (Use only if valid, otherwise ignore) = [{user.PostalCode}]
 ";
         _history.AddUserMessage(prompt);
 
@@ -65,10 +58,8 @@ public class QuestGeneratorService
 
         // Parse the response into a string
         var combinedText = new StringBuilder();
-        Console.WriteLine("Assistant > ");
         foreach (var chunk in response)
         {
-            Console.Write(chunk.Content);
             combinedText.AppendLine(chunk.Content);
         }
 
