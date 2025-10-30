@@ -14,6 +14,26 @@ a, .btn-link {
     color: #006bb7;
 }
 
+/* Override bootstrap default color for navs*/
+.nav-pills .nav-link {
+    color: black !important;
+    background-color: transparent !important;
+}
+
+.nav-pills .nav-link:hover {
+    color: #333 !important;
+}
+
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link.active:focus,
+.nav-pills .nav-link.active:hover {
+    background-color: black !important;
+    color: white !important;
+}
+
+/* ------------------------------- */
+
 .animated-message {
     transition: opacity 0.5s ease-in-out;
     opacity: 1;

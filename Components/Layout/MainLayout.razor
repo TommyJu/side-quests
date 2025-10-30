@@ -6,38 +6,38 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject UserManager<ApplicationUser> UserManager
 
-    <div class="page">
-        <div class="sidebar">
-            <NavMenu />
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            @if (isAuthenticated)
+            {
+                <div class="user-info">
+                    <span><strong>Your Points:</strong> @userPoints</span>
+                </div>
+            }
+            else
+            {
+                <div class="user-info">
+                    <span>You are not logged in.</span>
+                </div>
+            }
         </div>
 
-        <main>
-            <div class="top-row px-4">
-                @if (isAuthenticated)
-                {
-                    <div class="user-info">
-                        <span><strong>Your Points:</strong> @userPoints</span>
-                    </div>
-                }
-                else
-                {
-                    <div class="user-info">
-                        <span>You are not logged in.</span>
-                    </div>
-                }
-            </div>
+        <article class="content pb-4">
+            @Body
+        </article>
+    </main>
+</div>
 
-            <article class="content pb-4">
-                @Body
-            </article>
-        </main>
-    </div>
-
-    <div id="blazor-error-ui" data-nosnippet>
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
-    </div>
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
 @code {
     private bool isAuthenticated = false;
     private int userPoints;
