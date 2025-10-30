@@ -54,7 +54,11 @@
 
     </div>
 
-    @if (activity == null)
+    @if (showSuccessMessage)
+    {
+        <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
+    }
+    else if (activity == null)
     {
         <button class="rainbow-btn btn btn-lg text-white fw-bold px-4 py-2 mt-12 margin-top-12rem"
             @onclick="LoadFilteredActivity">
@@ -62,9 +66,9 @@
         </button>
     }
 
-    @if (activity != null)
+    else if (activity != null)
     {
-        <div class="mt-4 mb-4 p-4 border rounded shadow bg-white" style="width: 100%; max-width: 800px;">
+        <div class="mt-4 mb-4 p-4 border rounded shadow bg-white" style="width: 90%; max-width: 800px;">
             <h4 class="text-lg font-semibold text-center" style="color: @randomColor">@activity.Title</h4>
             <p><strong>Type:</strong> @activity.Type</p>
             <p><strong>Participants:</strong> @activity.Participants</p>
@@ -87,34 +91,33 @@
                 }
 
             </div>
+        </div>
 
+        <!-- Quest Description Modal -->
+        <div class="modal fade @((showQuestModal ? "show d-block" : ""))" tabindex="-1"
+            style="@((showQuestModal ? "background-color: rgba(0,0,0,0.5);" : ""))"
+            aria-hidden="@(showQuestModal ? "false" : "true")">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@activity.Title</h5>
+                        <button type="button" class="btn-close" @onclick="DeclineQuest"></button>
+                    </div>
+                    <div class="modal-body" style="white-space: pre-wrap; max-height: 60vh; overflow-y: auto;">
+                        @generatedQuestDescription
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" @onclick="AcceptQuest">✅ Accept</button>
+                        <button class="btn btn-danger" @onclick="DeclineQuest">❌ Decline</button>
+                    </div>
+                </div>
+            </div>
         </div>
     }
     else if (hasSearched)
     {
         <div class="alert alert-warning mt-3">No quests found with these filters 😢</div>
     }
-
-    <!-- Quest Description Modal -->
-    <div class="modal fade @((showQuestModal ? "show d-block" : ""))" tabindex="-1"
-        style="@((showQuestModal ? "background-color: rgba(0,0,0,0.5);" : ""))"
-        aria-hidden="@(showQuestModal ? "false" : "true")">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Quest Description</h5>
-                    <button type="button" class="btn-close" @onclick="DeclineQuest"></button>
-                </div>
-                <div class="modal-body" style="white-space: pre-wrap; max-height: 60vh; overflow-y: auto;">
-                    @generatedQuestDescription
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success" @onclick="AcceptQuest">✅ Accept</button>
-                    <button class="btn btn-danger" @onclick="DeclineQuest">❌ Decline</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </div>
@@ -137,6 +140,8 @@
     private bool hasSearched = false;
     private bool questDescriptionLoading = false;
     private bool showQuestModal = false;
+    private string? successMessage;
+    private bool showSuccessMessage = false;
 
     // Filters
     private ActivityType? selectedType = null;
@@ -168,8 +173,18 @@
     private string GetRandomColor()
     {
         Random rand = new Random();
-        string[] colors = { "red", "green", "blue", "yellow", "purple", "orange", "pink", "brown", "gray" };
+        string[] colors = { "red", "green", "blue", "lightblue", "purple", "orange", "pink", "brown", "gray" };
         return colors[rand.Next(colors.Length)];
+    }
+
+    private async Task ShowSuccess(string message)
+    {
+        successMessage = message;
+        showSuccessMessage = true;
+        StateHasChanged();
+        await Task.Delay(5000);
+        showSuccessMessage = false;
+        StateHasChanged();
     }
 
     private async Task SaveActivity()
@@ -212,6 +227,7 @@
         if (currentUser!.Identity != null && currentUser!.Identity.IsAuthenticated)
         {
             await ActivityService.SaveActivityAsync(currentUser, activity, generatedQuestDescription);
+            await ShowSuccess($"✅ You accepted \"{activity.Title}\"! Check your Quest Log to view your progress.");
         }
         showQuestModal = false;
         activity = null;
