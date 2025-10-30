@@ -54,7 +54,7 @@ a, .btn-link {
 .nav-pills .nav-link.active,
 .nav-pills .nav-link.active:focus,
 .nav-pills .nav-link.active:hover {
-    background-color: black !important;
+    background-color: rgb(0, 0, 0) !important;
     color: white !important;
 }
 

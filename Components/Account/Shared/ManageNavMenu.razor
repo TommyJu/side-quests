@@ -5,13 +5,13 @@
 
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/Email">Email</NavLink>
+        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Email</NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/ChangePassword" Match="NavLinkMatch.All">Password</NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/PostalCode">Postal Code</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/PostalCode" Match="NavLinkMatch.All">Postal Code</NavLink>
     </li>
     @if (hasExternalLogins)
     {
