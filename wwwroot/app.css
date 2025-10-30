@@ -23,6 +23,23 @@ a, .btn-link {
     color: #006bb7;
 }
 
+#activityContainer {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden; /* prevents it from expanding parent */
+  display: block;
+}
+
+#activityContainer canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: contain;
+}
+
 /* Override bootstrap default color for navs*/
 .nav-pills .nav-link {
     color: black !important;

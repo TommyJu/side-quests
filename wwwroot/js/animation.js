@@ -6,8 +6,8 @@ window.Activity3D = {
   cameraTarget: new THREE.Vector3(),
   orbitAngle: 0,
   basePosition: new THREE.Vector3(0, 0, 0),
-  clusterRadius: 4,        // initial cluster radius
-  growthFactor: 0.1,       // cluster expands per new cube
+  clusterRadius: 4, // initial cluster radius
+  growthFactor: 0.1, // cluster expands per new cube
   animationRunning: false, // prevent multiple loops
 
   loadThreeJS: function () {
@@ -26,8 +26,15 @@ window.Activity3D = {
       return;
     }
 
-    const width = 800;
-    const height = 600;
+    window.addEventListener("resize", () => this.onWindowResize(containerId));
+
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error("Container not found!");
+      return;
+    }
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 2000);
@@ -35,11 +42,6 @@ window.Activity3D = {
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setSize(width, height);
 
-    const container = document.getElementById(containerId);
-    if (!container) {
-      console.error("Container not found!");
-      return;
-    }
     container.appendChild(this.renderer.domElement);
 
     // Add lights
@@ -54,6 +56,19 @@ window.Activity3D = {
     if (!this.animationRunning) {
       this.animate();
     }
+  },
+
+  onWindowResize: function (containerId) {
+    const container = document.getElementById(containerId);
+    if (!container || !this.camera || !this.renderer) return;
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize(width, height);
   },
 
   addActivity: function (size = 1) {
