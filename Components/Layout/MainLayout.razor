@@ -28,28 +28,5 @@
     <span class="dismiss">🗙</span>
 </div>
 @code {
-    private bool isAuthenticated = false;
-    private int userPoints;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        isAuthenticated = user.Identity?.IsAuthenticated ?? false;
-
-        if (isAuthenticated)
-        {
-            var appUser = await UserManager.GetUserAsync(user);
-            userPoints = appUser?.Points ?? 0;
-        }
-    }
-
-    // Method to update points and trigger re-render
-    private void IncrementUserPoints(int points)
-    {
-        userPoints += points;
-        StateHasChanged(); // Trigger re-render
-        Console.WriteLine($"User points updated: {userPoints}");
-    }
 }
