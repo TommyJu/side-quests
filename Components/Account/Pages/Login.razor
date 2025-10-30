@@ -12,9 +12,9 @@
 
 <PageTitle>Log in</PageTitle>
 
-<div class="row d-flex justify-content-center">
-    <div class="col-lg-9">
-        <section>
+<div class="row d-flex justify-content-center" style="overflow: hidden;">
+    <div class="col-lg-9" style="overflow: hidden;">
+        <section style="padding: 0 24px;">
             <StatusMessage Message="@errorMessage" />
             <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
                 <DataAnnotationsValidator />
