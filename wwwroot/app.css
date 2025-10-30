@@ -6,8 +6,17 @@ body {
     min-height: 100%;
 }
 
-html, body {
-    font-family: "Comic Sans MS",'Helvetica Neue', Helvetica, Arial, sans-serif;
+p {
+    margin: 0;
+}
+
+.logo {
+    height: 2.5rem;
+}
+
+/* Override Bootstrap styles */
+.navbar {
+    padding: 0;
 }
 
 a, .btn-link {
