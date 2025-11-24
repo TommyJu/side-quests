@@ -79,7 +79,7 @@ else
     private int userPoints;
 
     // Authentication
-    private ClaimsPrincipal? currentUser;
+    private ApplicationUser? currentUser;
 
     /// <summary>
     /// Gets the current user, saved activites, and user points on page initialization.
@@ -87,10 +87,11 @@ else
     /// <returns></returns> 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        currentUser = authState.User;
-        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser);
-        userPoints = await ActivityService.GetUserPointsAsync(currentUser);
+        AuthenticationState authState = await AuthProvider.GetAuthenticationStateAsync();
+        ClaimsPrincipal claimsPrincipal = authState.User;
+        currentUser = await UserManager.GetUserAsync(claimsPrincipal);
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser!);
+        userPoints = currentUser!.Points;
     }
 
     /// <summary>

@@ -1,168 +1,170 @@
-using System.Security.Claims;
 using im_bored.Data;
 using im_bored.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace im_bored.Services;
 
-public class ActivityService(
-    ApplicationDbContext _context,
-    UserManager<ApplicationUser> _userManager)
+/// <summary>
+/// Represents the business logic and related functionality of activities.
+/// </summary>
+/// <param name="_context">The database context for database operations.</param>
+public class ActivityService(ApplicationDbContext _context)
 {
+
+    /// <summary>
+    /// Indicates the number of points gained for each completed quest or activity.
+    /// </summary>
     public const int POINTS_GAINED_PER_ACTIVITY = 10;
-    // Select random activity from the database
-    public async Task<Activity> GetRandomActivity()
+
+
+    /// <summary>
+    /// Chooses a random activity given a list of activities
+    /// </summary>
+    /// <param name="activities">Represents a list of activities</param>
+    /// <returns>Returns an activity or null if no activites are given.</returns>
+    private Activity? ChooseRandomActivity(List<Activity> activities)
     {
-        var activities = await _context.Activities.ToListAsync();
-        var random = new Random();
-        var randomIndex = random.Next(activities.Count);
-        return activities[randomIndex];
-    }
-
-    // Select random activity from the database with filters
-    // Filters: type, participants, price, duration, kidFriendly
-    public async Task<Activity?> GetFilteredRandomActivity(
-    ActivityType? type = null,
-    ActivityParticipants? participants = null,
-    ActivityPrice? price = null,
-    ActivityDuration? duration = null,
-    bool? kidFriendly = null)
-    {
-        var query = _context.Activities.AsQueryable();
-
-        if (type.HasValue) query = query.Where(a => a.Type == type.Value);
-        if (participants.HasValue) query = query.Where(a => a.Participants == participants.Value);
-        if (price.HasValue) query = query.Where(a => a.Price == price.Value);
-        if (duration.HasValue) query = query.Where(a => a.ActivityDuration == duration.Value);
-        if (kidFriendly.HasValue) query = query.Where(a => a.kidFriendly == kidFriendly.Value);
-
-        var activities = await query.ToListAsync();
         if (activities.Count == 0) return null;
 
         var random = new Random();
         return activities[random.Next(activities.Count)];
     }
 
-    // Helper: Get user including SavedActivities
-    private async Task<ApplicationUser?> GetUserWithActivitiesAsync(ClaimsPrincipal principal)
+
+    /// <summary>
+    /// Gets a random activity from all activities stored in the database, after applying search filters.
+    /// </summary>
+    /// <param name="type">Represents the type of activity.</param>
+    /// <param name="participants">Represents the number of participants for an activity.</param>
+    /// <param name="price">Represents the cost of an activity.</param>
+    /// <param name="duration">Represents the duration of an activity.</param>
+    /// <param name="kidFriendly">Represents whether the activity is appropriate for kids.</param>
+    /// <returns>Returns a random activity that matches all filters.</returns>
+    public async Task<Activity?> GetFilteredRandomActivity(
+    ApplicationUser currentUser,
+    ActivityType? type = null,
+    ActivityParticipants? participants = null,
+    ActivityPrice? price = null,
+    ActivityDuration? duration = null,
+    bool? kidFriendly = null)
     {
-        var user = await _userManager.GetUserAsync(principal);
-        if (user == null) return null;
+        await LoadUserSavedActivities(currentUser);
 
-        _context.Attach(user);
+        // Apply each filter to all activities.
+        var query = _context.Activities.AsQueryable();
+        if (type.HasValue) query = query.Where(a => a.Type == type.Value);
+        if (participants.HasValue) query = query.Where(a => a.Participants == participants.Value);
+        if (price.HasValue) query = query.Where(a => a.Price == price.Value);
+        if (duration.HasValue) query = query.Where(a => a.ActivityDuration == duration.Value);
+        if (kidFriendly.HasValue) query = query.Where(a => a.kidFriendly == kidFriendly.Value);
+        
+        // Prevent loading an already saved activity
+        var savedActivityIds = currentUser.SavedActivities.Select(usa => usa.ActivityId).ToList();
+        query = query.Where(a => !savedActivityIds.Contains(a.Id));
 
-        // NOTE: only scalar values for each entry in UserSavedActivites are loaded for improved performance
-        // Activity and User entities may be null
-        await _context.Entry(user)
-            .Collection(u => u.SavedActivities)
-            .LoadAsync();
-
-        return user;
+        var activities = await query.ToListAsync();
+        return ChooseRandomActivity(activities);
     }
 
-    /*
-            * Save activity to the user's saved activities list
-            * @param principal The ClaimsPrincipal of the user
-            * @param activity The activity to save
-            * @return Task representing the asynchronous operation
 
-    */
+    /// <summary>
+    /// Loads the user's saved activities from the database.
+    /// </summary>
+    /// <param name="currentUser">The user that is currently authenticated.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">Throws an exception if the current user is null.</exception>
+    private async Task LoadUserSavedActivities(ApplicationUser currentUser)
+    {
+        if (currentUser == null) throw new ArgumentException("The current user cannot be null.");
+
+        _context.Attach(currentUser);
+        await _context.Entry(currentUser)
+            .Collection(u => u.SavedActivities)
+            .LoadAsync();
+    }
+
+
+    /// <summary>
+    /// Saves a given activity to the user's saved activities.
+    /// </summary>
+    /// <param name="currentUser">The current user that is saving the activity.</param>
+    /// <param name="activity">The activity to be saved.</param>
+    /// <param name="description">The curated description for the saved activity.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">Throws an exception if the activity is null.</exception>
     public async Task SaveActivityAsync(
-        ClaimsPrincipal principal,
+        ApplicationUser currentUser,
         Activity activity,
         string description)
     {
-        if (activity == null) return;
+        if (activity == null) throw new ArgumentException("The current activity cannot be null.");
+        await LoadUserSavedActivities(currentUser);
 
-        var user = await GetUserWithActivitiesAsync(principal);
-        if (user == null) return;
-
-        if (!user.SavedActivities.Any(a => a.ActivityId == activity.Id))
-        // Add the Activity as an entry into the UserSavedActivites join table.
+        UserSavedActivity savedActivity = new UserSavedActivity
         {
-            UserSavedActivity savedActivity = new UserSavedActivity
-            {
-                UserId = user.Id,
-                User = user,
-                ActivityId = activity.Id,
-                Activity = activity,
-                Description = description
-            };
-            user.SavedActivities.Add(savedActivity);
-            await _context.SaveChangesAsync();
-        }
+            UserId = currentUser.Id,
+            User = currentUser,
+            ActivityId = activity.Id,
+            Activity = activity,
+            Description = description
+        };
+        currentUser.SavedActivities.Add(savedActivity);
+        await _context.SaveChangesAsync();
     }
 
-    /*
-                * Remove activity from the user's saved activities list
-                * @param principal The ClaimsPrincipal of the user
-                * @param activity The activity to remove
-                * @return Task representing the asynchronous operation
-    */
-    public async Task RemoveActivityAsync(ClaimsPrincipal principal, Activity activity)
-    {
-        if (activity == null) return;
-        var user = await GetUserWithActivitiesAsync(principal);
-        if (user == null) return;
 
-        UserSavedActivity? savedActivity = user.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
-        if (savedActivity != null)
-        {
-            user.SavedActivities.Remove(savedActivity);
-            await _context.SaveChangesAsync();
-        }
+    /// <summary>
+    /// Removes the activity from the user's saved activities.
+    /// </summary>
+    /// <param name="currentUser">The current user who is removing the activity.</param>
+    /// <param name="activity">The activity to be removed.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">Throws an exception if the activity is null.</exception>
+    public async Task RemoveActivityAsync(ApplicationUser currentUser, UserSavedActivity savedActivity)
+    {
+        if (savedActivity == null) throw new ArgumentException("The current activity cannot be null.");
+        await LoadUserSavedActivities(currentUser);
+
+        currentUser.SavedActivities.Remove(savedActivity);
+        await _context.SaveChangesAsync();
     }
 
-    /*
-            * Complete activity and gain points
-            * @param principal The ClaimsPrincipal of the user
-            * @param activity The activity to complete
-            * @return Task representing the asynchronous operation
-    */
 
-    public async Task CompleteActivityAsync(ClaimsPrincipal principal, Activity activity)
+    /// <summary>
+    /// Marks the user's saved activity as complete.
+    /// </summary>
+    /// <param name="currentUser">The current user who is completing the activity.</param>
+    /// <param name="activity">The activity to be completed.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">Throws an exception if the activity is null.</exception>
+    public async Task CompleteActivityAsync(ApplicationUser currentUser, Activity activity)
     {
-        if (activity == null) return;
-        var user = await GetUserWithActivitiesAsync(principal);
-        if (user == null) return;
+        if (activity == null) throw new ArgumentException("The current activity cannot be null.");
+        await LoadUserSavedActivities(currentUser);
 
-        UserSavedActivity? savedActivity = user.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
+        UserSavedActivity? savedActivity = currentUser.SavedActivities.FirstOrDefault(usa => usa.ActivityId == activity.Id);
         if (savedActivity != null)
         {
             savedActivity.IsComplete = true;
-            user.Points += POINTS_GAINED_PER_ACTIVITY;
+            currentUser.Points += POINTS_GAINED_PER_ACTIVITY;
             await _context.SaveChangesAsync();
         }
     }
 
-    /*
-            * Get the list of UserSavedActivity for a select claims principal
-            * @param principal The ClaimsPrincipal of the user
-            * @return List of saved activities
-    */
-    public async Task<List<UserSavedActivity>> GetSavedActivitiesAsync(ClaimsPrincipal principal)
-    {
-        var user = await _userManager.GetUserAsync(principal);
-        if (user == null) return [];
 
-        // Note: Include is needed to load the Activity entity which is null from GetUserAsync,
+    /// <summary>
+    /// Gets the user's saved activities
+    /// </summary>
+    /// <param name="currentUser">The current user to retrieve saved activites from.</param>
+    /// <returns></returns>
+    public async Task<List<UserSavedActivity>> GetSavedActivitiesAsync(ApplicationUser currentUser)
+    {
+        await LoadUserSavedActivities(currentUser);
+
         return await _context.UserSavedActivities
-            .Where(usa => usa.UserId == user.Id)
+            .Where(usa => usa.UserId == currentUser.Id)
             .Include(usa => usa.Activity)
             .ToListAsync();
-    }
-
-    /*
-    * Get the user's points
-    * @param principal The ClaimsPrincipal of the user
-    * @return The user's points
-    */
-    public async Task<int> GetUserPointsAsync(ClaimsPrincipal principal)
-    {
-        var user = await _userManager.GetUserAsync(principal);
-        if (user == null) return 0;
-        return user.Points;
     }
 
 } // end of class

@@ -3,8 +3,11 @@
 @using System.Security.Claims
 @using im_bored.Models
 @using im_bored.Services
+@using Microsoft.AspNetCore.Identity
+@using im_bored.Data
 @rendermode InteractiveServer
 @inject AuthenticationStateProvider AuthProvider
+@inject UserManager<ApplicationUser> UserManager
 @inject QuestGeneratorService QuestService
 
 <PageTitle>Home</PageTitle>
@@ -137,15 +140,14 @@
     // Constants
     private const int ALERT_MESSAGE_DISPLAY_DURATION_IN_MILLISECONDS = 5000;
 
-    // Authentication and current user
-    private ClaimsPrincipal? currentUser;
-    private AuthenticationState? authState;
-    private Activity? activity;
+    // Authentication
+    private ApplicationUser? currentUser;
 
     // Activity title color
     private string randomColor = "black";
 
     // UI State
+    private Activity? activity;
     private bool hasSearched = false;
     private bool questDescriptionLoading = false;
     private string generatedQuestDescription = "";
@@ -166,8 +168,9 @@
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        authState = await AuthProvider.GetAuthenticationStateAsync();
-        currentUser = authState.User;
+        AuthenticationState authState = await AuthProvider.GetAuthenticationStateAsync();
+        ClaimsPrincipal claimsPrincipal = authState.User;
+        currentUser = await UserManager.GetUserAsync(claimsPrincipal);
     }
 
     /// <summary>
@@ -178,6 +181,7 @@
     {
         randomColor = GetRandomActivityTitleColor();
         activity = await ActivityService.GetFilteredRandomActivity(
+        currentUser!,
         selectedType,
         selectedParticipants,
         selectedPrice,

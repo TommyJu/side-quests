@@ -8,6 +8,6 @@ public class ApplicationUser : IdentityUser
     public int Points { get; set; } = 0;
     public string PostalCode { get; set; } = "";
 
-    public ICollection<UserSavedActivity> SavedActivities { get; set; } = [];
+    public ICollection<UserSavedActivity> SavedActivities { get; set; } = new List<UserSavedActivity>();
 }
 

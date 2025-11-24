@@ -84,7 +84,7 @@ else
     private string? alertMessage;
 
     // Authentication
-    private ClaimsPrincipal? currentUser;
+    private ApplicationUser? currentUser;
 
     /// <summary>
     /// Retrieves the current user and their saved activities on page initialization.
@@ -92,9 +92,10 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        currentUser = authState.User;
-        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser);
+        AuthenticationState authState = await AuthProvider.GetAuthenticationStateAsync();
+        ClaimsPrincipal claimsPrincipal = authState.User;
+        currentUser = await UserManager.GetUserAsync(claimsPrincipal);
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser!);
     }
 
     /// <summary>
@@ -139,7 +140,7 @@ else
     private async Task RemoveActivityAsync(UserSavedActivity userSavedActivity)
     {
         // Persist changes to UserSavedActivity in the database
-        await ActivityService.RemoveActivityAsync(currentUser!, userSavedActivity.Activity);
+        await ActivityService.RemoveActivityAsync(currentUser!, userSavedActivity);
 
         // Update the local UI state
         savedActivities?.Remove(userSavedActivity);

@@ -58,7 +58,7 @@ builder.Services.AddScoped<ActivityService>();
 var model = builder.Configuration["OpenAI:Model"];
 var apiKey = builder.Configuration["OpenAI:ApiKey"];
 var kernelBuilder = Kernel.CreateBuilder();
-kernelBuilder.AddOpenAIChatCompletion(model, apiKey);
+kernelBuilder.AddOpenAIChatCompletion(model!, apiKey!);
 var kernel = kernelBuilder.Build();
 // Register the kernel as a singleton for DI
 builder.Services.AddSingleton(kernel);
