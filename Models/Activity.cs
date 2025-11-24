@@ -19,8 +19,8 @@ public class Activity
     public required ActivityDuration ActivityDuration { get; set; }
     [Required]
     public required bool kidFriendly { get; set; }
-    
-    // Many to Many Relationship: list of users who have saved this activity
+
+
     public ICollection<UserSavedActivity> SavedByUsers { get; set; } = new List<UserSavedActivity>();
 }
 

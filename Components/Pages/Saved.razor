@@ -17,24 +17,26 @@
 
 <PageTitle>Quest Log</PageTitle>
 
-@* Quests in-progress section *@
 <h2 class="text-center mt-4">📖 Quest Log</h2>
-@if (!string.IsNullOrEmpty(successMessage))
+@if (!string.IsNullOrEmpty(alertMessage))
 {
-    <div class="animated-message alert alert-success text-center mt-3">@successMessage</div>
+    <div class="animated-message alert alert-success text-center mt-3">@alertMessage</div>
 }
 else if (savedActivities == null)
 {
+    @* Loading saved activities spinner *@
     <div class="text-center mt-4">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
 }
 else if (!savedActivities.Any(a => !a.IsComplete))
 {
+    @* Message displayed if there are no user-saved activities *@
     <div class="alert alert-info mt-3 text-center">You have not accepted any quests yet.</div>
 }
 else
 {
+    @* Displays all user-saved activities in an accordion container *@
     <div class="accordion mt-4 w-100" id="savedActivitiesAccordion" style="max-width: 800px; margin: auto;">
         @foreach (var userSavedActivity in savedActivities.Where(a => !a.IsComplete))
         {
@@ -73,50 +75,75 @@ else
 
 
 @code {
-    private List<UserSavedActivity>? savedActivities;
-    private string? successMessage;
-    private ClaimsPrincipal? user;
+    // Constants
+    private const int ALERT_MESSAGE_DISPLAY_DURATION_IN_MILLISECONDS = 5000;
 
+    // UI State
+    private List<UserSavedActivity>? savedActivities;
+    private string? alertMessage;
+
+    // Authentication
+    private ClaimsPrincipal? currentUser;
+
+    /// <summary>
+    /// Retrieves the current user and their saved activities on page initialization.
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthProvider.GetAuthenticationStateAsync();
-        user = authState.User;
-        savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
+        currentUser = authState.User;
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser);
     }
 
-    @* Activity logic *@
-    private async Task ShowSuccess(string message)
+    /// <summary>
+    /// Updates the alert message and signals the UI to display it for a short moment.
+    /// </summary>
+    /// <param name="message">The message to be shown to the user after completing or removing a quest.</param>
+    /// <returns></returns>
+    private async Task ShowAlert(string message)
     {
-        successMessage = message;
+        alertMessage = message;
         StateHasChanged();
-        await Task.Delay(5000);
-        successMessage = null;
-        StateHasChanged();
-    }
-
-    private async Task CompleteActivityAsync(UserSavedActivity activity)
-    {
-        if (user?.Identity == null || !user.Identity.IsAuthenticated) return;
-
-        await ActivityService.CompleteActivityAsync(user, activity.Activity);
-
-        // Update local state
-        activity.IsComplete = true;
-
-        await ShowSuccess($"🎉 Congratulations! You completed \"{activity.Activity.Title}\" and have received {ActivityService.POINTS_GAINED_PER_ACTIVITY} quest points!");
+        await Task.Delay(ALERT_MESSAGE_DISPLAY_DURATION_IN_MILLISECONDS);
+        alertMessage = null;
         StateHasChanged();
     }
 
-    private async Task RemoveActivityAsync(UserSavedActivity activity)
+    /// <summary>
+    /// Marks the user's saved activity as complete.
+    /// </summary>
+    /// <param name="userSavedActivity">The activity saved by the user.</param>
+    /// <returns></returns>
+    private async Task CompleteActivityAsync(UserSavedActivity userSavedActivity)
+    {   
+        // Persist changes to UserSavedActivity in the database
+        await ActivityService.CompleteActivityAsync(currentUser!, userSavedActivity.Activity);
+
+        // Update the local UI state
+        userSavedActivity.IsComplete = true;
+
+        await ShowAlert(
+            $"🎉 Congratulations! You completed \"{userSavedActivity.Activity.Title}\" " +
+            $"and have received {ActivityService.POINTS_GAINED_PER_ACTIVITY} quest points!"
+            );
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Removes the activity from the user's saved activities.
+    /// </summary>
+    /// <param name="userSavedActivity">The saved activity to be removed.</param>
+    /// <returns></returns>
+    private async Task RemoveActivityAsync(UserSavedActivity userSavedActivity)
     {
-        if (user?.Identity == null || !user.Identity.IsAuthenticated) return;
+        // Persist changes to UserSavedActivity in the database
+        await ActivityService.RemoveActivityAsync(currentUser!, userSavedActivity.Activity);
 
-        await ActivityService.RemoveActivityAsync(user, activity.Activity);
+        // Update the local UI state
+        savedActivities?.Remove(userSavedActivity);
 
-        // Remove from local state
-        savedActivities?.Remove(activity);
-
-        await ShowSuccess($"🗑️ Removed \"{activity.Activity.Title}\" from your saved quests.");
+        await ShowAlert($"🗑️ Removed \"{userSavedActivity.Activity.Title}\" from your saved quests.");
         StateHasChanged();
     }
 }

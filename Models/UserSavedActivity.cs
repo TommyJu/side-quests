@@ -3,10 +3,8 @@ using im_bored.Data;
 
 namespace im_bored.Models;
 
-// Represents a join table for the (M:N) relationship between Activity and ApplicationUser entities.
 public class UserSavedActivity
 {
-    // Composite key (UserId + ActivityId)
     [Required]
     public required string UserId { get; set; }
     [Required]
@@ -16,7 +14,6 @@ public class UserSavedActivity
     [Required]
     public required Activity Activity { get; set; } = null!;
 
-    // Additional columns
     public string Description { get; set; } = string.Empty;
     public bool IsComplete { get; set; } = false;
 }
