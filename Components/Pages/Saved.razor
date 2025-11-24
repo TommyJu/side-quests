@@ -20,6 +20,7 @@
 <h2 class="text-center mt-4">📖 Quest Log</h2>
 @if (!string.IsNullOrEmpty(alertMessage))
 {
+    @* Display alert message *@
     <div class="animated-message alert alert-success text-center mt-3">@alertMessage</div>
 }
 else if (savedActivities == null)

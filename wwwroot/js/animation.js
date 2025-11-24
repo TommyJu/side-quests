@@ -71,7 +71,7 @@ window.Activity3D = {
     this.renderer.setSize(width, height);
   },
 
-  addActivity: function (size = 1) {
+  addCube: function (size = 1) {
     if (!this.scene) return;
 
     // Random color

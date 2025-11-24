@@ -18,29 +18,31 @@
 
 <PageTitle>Completed Quests</PageTitle>
 
-@* Quests completed section *@
 <h2 class="text-center mt-4">📚 Completed Quests</h2>
 
 @if (savedActivities == null)
-{
+{   
+    @* Loading saved activites spinner *@
     <div class="text-center mt-4">
         <div class="spinner-border text-secondary" role="status"></div>
     </div>
 }
 else if (!savedActivities.Any(a => a.IsComplete))
 {
+    @* Displays message if there are no completed quests *@
     <div class="alert alert-info mt-3 text-center">No quests completed yet.</div>
 }
 else
 {
-    @* Rendering activity graphic *@
     <div class="d-flex flex-column align-items-center gap-6">
+        @* User quest points count and 3D animation *@
         <p style="font-size: 24px; margin: 24px; font-style: italic;">Quest Points: @userPoints</p>
 
         @if (userPoints > 0) {
-            <div id="activityContainer"></div>
+            <div id="userPointsAnimation"></div>
         }
         
+        @* Completed activites accordion *@
         <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
             @foreach (var completed in savedActivities.Where(a => a.IsComplete))
             {
@@ -71,40 +73,57 @@ else
 }
 
 
-
 @code {
+    // UI State
     private List<UserSavedActivity>? savedActivities;
-    private ClaimsPrincipal? user;
     private int userPoints;
+
+    // Authentication
+    private ClaimsPrincipal? currentUser;
+
+    /// <summary>
+    /// Gets the current user, saved activites, and user points on page initialization.
+    /// </summary>
+    /// <returns></returns> 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthProvider.GetAuthenticationStateAsync();
-        user = authState.User;
-        savedActivities = await ActivityService.GetSavedActivitiesAsync(user);
-        userPoints = await ActivityService.GetUserPointsAsync(user);
+        currentUser = authState.User;
+        savedActivities = await ActivityService.GetSavedActivitiesAsync(currentUser);
+        userPoints = await ActivityService.GetUserPointsAsync(currentUser);
     }
-    // Add activities to 3D Animation based on userPoints
-    private async Task AddUserActivities()
+
+    /// <summary>
+    /// Adds a cube for each user quest point to the 3D animation.
+    /// </summary>
+    /// <returns></returns>
+    private async Task AddCubesToAnimation()
     {
         for (int i = 0; i < userPoints; i++)
         {
             // Add cube to the 3D scene
-            await JS.InvokeVoidAsync("Activity3D.addActivity");
+            await JS.InvokeVoidAsync("Activity3D.addCube");
         }
     }
+
+    /// <summary>
+    /// Loads the 3D animation for displaying the user's quest points.
+    /// </summary>
+    /// <param name="firstRender">A built-in parameter that is true on first render</param>
+    /// <returns></returns>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            // Load Three.js and Activity3D dynamically
+            // Load Three.js and Activity3D
             await JS.InvokeVoidAsync("Activity3D.loadThreeJS");
-            await JS.InvokeVoidAsync("Activity3D.init", "activityContainer");
+            await JS.InvokeVoidAsync("Activity3D.init", "userPointsAnimation");
 
-            // Reset the scene
+            // Reset the scene to clear the 3D environment of any old state
             await JS.InvokeVoidAsync("Activity3D.resetScene");
 
             // Add cubes based on userPoints
-            await AddUserActivities();
+            await AddCubesToAnimation();
         }
 
     }
