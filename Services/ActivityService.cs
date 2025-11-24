@@ -48,8 +48,6 @@ public class ActivityService(ApplicationDbContext _context)
     ActivityDuration? duration = null,
     bool? kidFriendly = null)
     {
-        await LoadUserSavedActivities(currentUser);
-
         // Apply each filter to all activities.
         var query = _context.Activities.AsQueryable();
         if (type.HasValue) query = query.Where(a => a.Type == type.Value);
@@ -59,6 +57,7 @@ public class ActivityService(ApplicationDbContext _context)
         if (kidFriendly.HasValue) query = query.Where(a => a.kidFriendly == kidFriendly.Value);
         
         // Prevent loading an already saved activity
+        await LoadUserSavedActivities(currentUser);
         var savedActivityIds = currentUser.SavedActivities.Select(usa => usa.ActivityId).ToList();
         query = query.Where(a => !savedActivityIds.Contains(a.Id));
 
@@ -117,12 +116,12 @@ public class ActivityService(ApplicationDbContext _context)
     /// Removes the activity from the user's saved activities.
     /// </summary>
     /// <param name="currentUser">The current user who is removing the activity.</param>
-    /// <param name="activity">The activity to be removed.</param>
+    /// <param name="savedActivity">The saved activity to be removed.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">Throws an exception if the activity is null.</exception>
     public async Task RemoveActivityAsync(ApplicationUser currentUser, UserSavedActivity savedActivity)
     {
-        if (savedActivity == null) throw new ArgumentException("The current activity cannot be null.");
+        if (savedActivity == null) throw new ArgumentException("The saved activity cannot be null.");
         await LoadUserSavedActivities(currentUser);
 
         currentUser.SavedActivities.Remove(savedActivity);
