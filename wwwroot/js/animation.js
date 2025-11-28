@@ -26,8 +26,6 @@ window.Activity3D = {
       return;
     }
 
-    window.addEventListener("resize", () => this.onWindowResize(containerId));
-
     const container = document.getElementById(containerId);
     if (!container) {
       console.error("Container not found!");
@@ -56,6 +54,9 @@ window.Activity3D = {
     if (!this.animationRunning) {
       this.animate();
     }
+
+    // Add window resize event listener
+    window.addEventListener("resize", () => this.onWindowResize(containerId));
   },
 
   onWindowResize: function (containerId) {
