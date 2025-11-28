@@ -54,7 +54,8 @@ builder.Services.AddLogging(services => services.AddConsole().SetMinimumLevel(Lo
 
 // Semantic Kernel
 var model = builder.Configuration["OpenAI:Model"];
-var apiKey = builder.Configuration["OpenAI:ApiKey"];
+// Open AI API Key should be set using environment variables during deployment.
+var apiKey = builder.Configuration["OpenAI_ApiKey"];
 var kernelBuilder = Kernel.CreateBuilder();
 kernelBuilder.AddOpenAIChatCompletion(model!, apiKey!);
 var kernel = kernelBuilder.Build();
