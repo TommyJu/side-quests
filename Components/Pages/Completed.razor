@@ -31,16 +31,17 @@ else if (!savedActivities.Any(a => a.IsComplete))
 {
     @* Displays message if there are no completed quests *@
     <div class="alert alert-info mt-3 text-center">No quests completed yet.</div>
+    
+    <div id="userPointsAnimation"></div>
 }
 else
 {
     <div class="d-flex flex-column align-items-center gap-6">
         @* User quest points count and 3D animation *@
         <p style="font-size: 24px; margin: 24px; font-style: italic;">Quest Points: @userPoints</p>
+        
+        <div id="userPointsAnimation"></div>
 
-        @if (userPoints > 0) {
-            <div id="userPointsAnimation"></div>
-        }
         
         @* Completed activites accordion *@
         <div class="accordion mt-4 w-100" id="completedActivitiesAccordion" style="max-width: 800px; margin: auto;">
